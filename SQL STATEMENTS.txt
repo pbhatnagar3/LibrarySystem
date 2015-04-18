@@ -1,0 +1,266 @@
+                SQL STATEMENTS
+NOTES:
+All lowercase variables are extracted from form data
+
+
+Log In
+// get username and password
+// username
+// password
+// check both to be not empty
+// note: ignoring SQL injection
+
+SELECT * FROM USER 
+WHERE Username=username AND 
+Password=password;
+
+// if something is returned: 
+//     take user to main system page
+// else redirect to login page with error
+
+
+
+
+New User Registration
+// get data from form
+// note: lowercase variables are those extracted from form
+
+SELECT * FROM USER 
+WHERE Username=username;
+
+// if an entry exists, throw error
+// else if password != confirm_password, throw error
+// else
+
+INSERT INTO USER
+VALUES( username, password );
+
+// redirect to create profile page
+
+
+
+
+Create Profile
+// get form data
+// insert the below fields into STUDENT_FACULTY with is_debarred and // penalty as FALSE by default.
+//if the new user is not a faculty, the department will be NULL-ed
+INSERT INTO STUDENT_FACULTY
+VALUES (username, name, dob, gender, is_debarred, email, address,   is_faculty, penalty, department); 
+
+// if successful, redirect to search_books
+// else show form screen again with errors
+
+
+
+Search Books
+// get form data
+// throws error if all ISBN, title, and author are empty
+//if all the fields are filled in, execute the following
+SELECT * FROM BOOK 
+WHERE Isbn=isbn AND 
+Publisher=publisher AND 
+Title=title AND
+Author=author AND 
+Edition=edition;
+
+//if only ISBN is available, then execute the following
+SELECT * FROM BOOK 
+WHERE Isbn=isbn;
+
+//if we only have Title, then execute the following
+SELECT * FROM BOOK 
+WHERE Title=title;
+
+//if we have publ
+// note: all books (including reserved) are displayed
+// note: reserved books won’t be clickable
+
+// if a user clicks on a book
+// check if book is on reserve or not
+// do nothing if book is on reserve
+// else display all copies of the book
+// display all available books and if there are none then display the earliest date they are available (based on the last check-out o that copy or the hold-status
+
+SELECT * FROM BOOK_COPY
+WHERE Book_id=book_id
+
+
+
+Future Hold Request
+// get form data
+
+SELECT * FROM BOOK_COPY
+WHERE ...
+
+// if user clicks “Request”
+
+UPDATE BOOK_COPY 
+SET Future_requester=future_requester
+WHERE Copy_number=copy_number AND
+Book_id=book_id;
+
+// show success message
+// redirect to search page
+
+
+
+
+Track Book Location
+// get form data
+SELECT Shelf_number FROM SHELF
+WHERE Shelf_number IN
+SELECT Shelf_number FROM LOCATED_ON
+WHERE Book_id IN 
+SELECT Book_id FROM BOOK
+WHERE Isbn=isbn;
+
+
+
+
+Checkout
+//check if the book is available for checkout. If it is, then execute the following:
+
+INSERT INTO ISSUES
+VALUES (date_of_issue, extension_date, return_date, count_of_extension, copy_number, book_id);
+
+//Update is_checked_out of BOOK_COPY
+
+UPDATE BOOK_COPY 
+SET Is_checked_out=TRUE
+WHERE Copy_number=copy_number AND
+Book_id=book_id;
+
+// redirect to main checkout screen
+
+
+
+
+Return Book
+// get form data
+// get info for book copy
+
+UPDATE BOOK_COPY 
+SET Is_checked_out=FALSE
+WHERE Copy_number=copy_number AND
+Isbn=isbn;
+
+// check ISSUES table for due date
+SELECT Return_date FROM ISSUES
+WHERE Isbn=isbn AND Username=username
+ORDER BY Return_date DESC LIMIT 1
+
+// if returned beyond due date
+
+SELECT Penalty from STUDENT_FACULTY
+WHERE Username=username
+
+// new_penalty = penalty + 0.50*(no of days late)
+
+UPDATE STUDENT_FACULTY 
+SET Penalty=new_penalty
+WHERE Username=username;
+
+
+
+
+Lost/Damaged Book
+SQL
+// For damaged book, the user will be charged a penalty equal to 50% // of the original price. If lost, then the user will be charged the // price of the lost book.
+
+SELECT Username FROM ISSUES
+WHERE Isbn=isbn AND
+Copy_id=copy_id AND
+Return_date in (SELECT Max(Return_date) from ISSUES
+WHERE Isbn = isbn AND
+Copy_id = copy_id);
+
+//the following will identify all the books that are lost
+SELECT Username FROM ISSUES
+WHERE ISBN=isbn AND
+ Copy_id=copy_id AND
+ Return_date < current_date
+
+// Select most recent return date that has passed (before system time)
+// Staffs will take care of the logic (Lost or Damaged)
+// Our program will just accept the charge values. Staff will determine whether the book is lost or damaged. If damaged, charge 50% of original price. If lost, charge full price.
+SELECT Cost FROM BOOK
+WHERE ISBN=isbn
+// Staffs calculate the charged amount, stored in variable charge
+UPDATE STUDENT_FACULTY SET Penalty=charge WHERE Username=username;
+
+
+
+Damaged Book Report
+SQL
+//Shows the number of damaged books for three selected subjects for a given month.
+//variables: month,subject1,subject2,subject3
+//if subject1 is not NULL
+
+SELECT COUNT(*)
+SELECT Is_damaged,Copy_id FROM BOOK_COPY
+WHERE ISBN IN
+SELECT ISBN FROM BOOK
+WHERE Subject_name=subject1
+
+//none of the three subject fields are none
+
+// (join issues and book_copy) join book
+// select entries with subjects 1
+// select with appropriate month and is_damaged=true
+
+SELECT COUNT(*) FROM
+(ISSUES INNER JOIN BOOK_COPY
+ON ISSUES.Isbn=BOOK_COPY.Isbn AND
+ISSUES.Copy_id=COOK_COPY.Copy_number) as TEMP
+INNER JOIN BOOK 
+ON BOOK.Isbn=TEMP.Isbn
+WHERE Subject=subject1 AND Is_damaged=TRUE
+
+// repeat the above query for each subject
+
+
+
+Popular Book Report
+SELECT COUNT(*) AS Checkouts FROM
+((ISSUES INNER JOIN BOOK_COPY
+ON ISSUES.Isbn=BOOK_COPY.Isbn AND
+ISSUES.Copy_id=COOK_COPY.Copy_number) as TEMP
+INNER JOIN BOOK 
+ON BOOK.Isbn=TEMP.Isbn) as POPULAR
+WHERE MONTH(POPULAR.Return_date) = month
+GROUP BY POPULAR.ISBN ORDER BY Checkouts DESC LIMIT 3;
+
+//repeat for month = 1 and 2
+
+
+
+Frequent User Report
+SQL
+// Just for Jan and Feb
+
+SELECT COUNT(*) AS Checkouts FROM
+((ISSUES INNER JOIN BOOK_COPY
+ON ISSUES.Isbn=BOOK_COPY.Isbn AND
+ISSUES.Copy_id=COOK_COPY.Copy_number) as TEMP
+INNER JOIN BOOK 
+ON BOOK.Isbn=TEMP.Isbn) as POPULAR
+WHERE MONTH(POPULAR.Return_date) = month
+GROUP BY POPULAR.Username ORDER BY Checkouts DESC 
+WHERE Checkouts > 10 LIMIT 5;
+
+
+
+
+Popular Subject Report
+SQL
+// Just for Jan and Feb
+SELECT COUNT(*) AS Checkouts FROM
+((ISSUES INNER JOIN BOOK_COPY
+ON ISSUES.Isbn=BOOK_COPY.Isbn AND
+ISSUES.Copy_id=COOK_COPY.Copy_number) as TEMP
+INNER JOIN BOOK 
+ON BOOK.Isbn=TEMP.Isbn) as POPULAR
+WHERE MONTH(POPULAR.Return_date) = month
+GROUP BY POPULAR.Subject ORDER BY Checkouts DESC LIMIT 3;
+
+//repeat for month = 1 and 2
