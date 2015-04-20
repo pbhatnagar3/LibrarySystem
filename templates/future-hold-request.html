@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Future Hold Request for a Book</h3>
+<form class="form" role="form" method="POST" action="/login/" id="login-form">
+		
+<div class="row">
+
+	<div class="col-sm-6">
+	<hr>
+
+		<input name="ISBN" type="text" class="form-control input-lg" placeholder="Enter ISBN" required autofocus>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Request</button>
+		
+	</form>
+	</div>
+	<div class="col-sm-6">
+	<hr>
+		<input name="CopyNumber" type="text" class="form-control input-lg" placeholder="Copy Number" required>
+		<br>
+		<input name="ExpectedAvailableDate" type="text" class="form-control input-lg" placeholder="Expected Available Date" required>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">OK</button>
+
+		
+	</div>
+</div>
+
+{% endblock %}
+1
