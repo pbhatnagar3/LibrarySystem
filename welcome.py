@@ -1,11 +1,13 @@
 from flask import Flask, render_template
-import mysql.connector
+import mysql.connector as sql
+from mysql.connector import errorcode
+
+cnx = sql.connect(user='group62', 
+	password='_password', 
+	host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
+	database="libpro")
 
 
-# db = MySQLdb.connect(host="localhost", # your host, usually localhost
-#                      user="root", # your username
-#                       passwd="", # your password
-#                       db="library") # name of the data base
 
 # cur = db.cursor()
 # from sqlalchemy import create_engine, MetaData
