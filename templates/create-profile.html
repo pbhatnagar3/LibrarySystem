@@ -15,7 +15,7 @@
 		
 		<input name="Email" type="text" class="form-control input-lg" placeholder="Email" required>
 		<br>
-		<input name="Address" type="text" class="form-control input-lg" placeholder="Last Name" required>
+		<input name="Address" type="text" class="form-control input-lg" placeholder="Address" rows='3' required>
 		<br>
 	</form>
 	</div>
@@ -31,14 +31,23 @@
 		<br>
 		<input name="Email" type="text" class="form-control input-lg" placeholder="Email" required>
 		<br>
+		<input list="isFacultyList" name="isFaculty" class="form-control input-lg" placeholder="Are you a faculty" required>
+			<datalist id="isFacultyList">
+    			<option value="Yes">
+    			<option value="No">
+	  		</datalist>
+		<br>
+
 		<input list="Departments" name="Department" class="form-control input-lg" placeholder="Department" required>
 			<datalist id="Departments">
     			<option value="ECE">
     			<option value="Computer Science">
 	  		</datalist>
 		<br>
+		 <br>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-sm-6 col-sm-offset-3">
 		<button type="submit" class="btn btn-success btn-block btn-lg">Sign in</button>
