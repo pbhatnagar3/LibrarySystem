@@ -5,31 +5,41 @@
 <form class="form" role="form" method="POST" action="/login/" id="login-form">
 		
 <div class="row">
-
-	<div class="col-sm-6">
 	<hr>
+
+	<div class="col-sm-6 col-sm-offset-3">
 
 		<input name="enterIssueID" type="text" class="form-control input-lg" placeholder="Enter your issue_id" required autofocus>
 		<br>
 		<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
-		
 	</form>
 	</div>
+</div>
+<div class="row">
+		<hr>
+
 	<div class="col-sm-6">
-	<hr>
 		<input name="OriginalCheckOutDate" type="text" class="form-control input-lg" placeholder="Original Checkout Date" required>
 		<br>
 		<input name="CurrentExtensionDate" type="text" class="form-control input-lg" placeholder="Current Extension Date" required>
 		<br>
 		<input name="CurrentReturnDate" type="text" class="form-control input-lg" placeholder="Current Return Date" required>
 		<br>
-		<input name="NewExtensionDate" type="text" class="form-control input-lg" placeholder="New Extension Date" required>
+		
+		
+	</div>
+	<div class="col-sm-6">
+	<input name="NewExtensionDate" type="text" class="form-control input-lg" placeholder="New Extension Date" required>
 		<br>
 		<input name="NewEstimatedReturnDate" type="text" class="form-control input-lg" placeholder="New Estimated Return Date" required>
 		<br>
-		<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
 
-		
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+
+		<button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
 	</div>
 </div>
 
