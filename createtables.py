@@ -74,7 +74,7 @@ TABLES['author'] = (
     ") ENGINE=InnoDB")
 
 TABLES['book'] = (
-	"CREATE TABLE `book_copy` ("
+	"CREATE TABLE `book` ("
     "  `Isbn` varchar(50) NOT NULL,"
     "  `Title` varchar(100) NOT NULL,"
     "  `Is_reserved` BOOLEAN NOT NULL,"
