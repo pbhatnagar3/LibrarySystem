@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Hold Reuest for a book</h3>
+<form class="form" role="form" method="POST" action="/requested-book/" id="request-book">
+
+<div class="row">
+ <!-- Book summery table will go here -->
+ 	<div class="col-sm-12">
+ 		<h4>Book Available Summary</h4>	
+ 		<table class="table">
+ 		<tr>
+		    <th>ISBN</th>
+		    <th>Title of the Book</th>		
+		    <th>Edition</th>
+		    <th># copies available</th>
+		</tr>
+		
+  		<tr>
+		    <td>Jill</td>
+		    <td>Smith</td>		
+		    <td>50</td>
+		    <td>50</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>Eve</td>
+		    <td>Jackson</td>		
+		    <td>94</td>
+		    <td>50</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>John</td>
+		    <td>Doe</td>		
+		    <td>80</td>
+		    <td>50</td>
+		    
+		  </tr>
+
+	</table>
+ 	</div>
+</div>
+		
+<div class="row">
+
+	<div class="col-sm-6">
+	<hr>		
+		Hold Request Date <input class="form-control input-lg" type=date step=7 min=2014-09-08>
+		<br>
+	</div>
+	<div class="col-sm-6">
+	<hr>
+		
+		Estimated Return Date <input class="form-control input-lg" type=date step=7 min=2014-09-08>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-6">
+	<div class="col-sm-4 ">
+	
+		<button type="submit" class="btn btn-success btn-block btn-lg">Back</button>
+	</div>
+	<div class="col-sm-4 ">
+	
+		<button type="submit" class="btn btn-success btn-block btn-lg">Search</button>
+	</div>
+	<div class="col-sm-4 ">
+		<button type="submit" class="btn btn-success btn-block btn-lg">Close</button>
+	
+	</div>
+</div>
+</div>
+
+<div class="row">
+ <!-- Book summery table will go here -->
+ 	<div class="col-sm-12">
+ 		<h4>Books on reserve</h4>	
+ 		<table class="table">
+ 		<tr>
+		    <th>ISBN</th>
+		    <th>Title of the Book</th>		
+		    <th>Edition</th>
+		    <th># copies available</th>
+		</tr>
+		
+  		<tr>
+		    <td>Jill</td>
+		    <td>Smith</td>		
+		    <td>50</td>
+		    <td>50</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>Eve</td>
+		    <td>Jackson</td>		
+		    <td>94</td>
+		    <td>50</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>John</td>
+		    <td>Doe</td>		
+		    <td>80</td>
+		    <td>50</td>
+		    
+		  </tr>
+
+	</table>
+ 	</div>
+</div>
+
+</form>
+{% endblock %}

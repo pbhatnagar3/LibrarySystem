@@ -57,6 +57,10 @@ def future_hold_request():
 def track_book_location():
 	return render_template('track-book-location.html')
 
+@app.route('/request-hold')
+def hold_request():
+	return render_template('request-hold.html')
+
 	
 if __name__ == '__main__':
 	app.run(debug=True)
