@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+	<!-- Left Column -->
+	<div class="col-sm-4">
+	<h3>Welcome to LibPro</h3>
+	<p>LibPro is Georgia Tech's most advanced Library Management System</p>
+	</div>
+
+	<!-- Middle Column | Sign up -->
+	<div class="col-sm-4">
+	<h3>Sign Up</h3>
+	<hr>
+	</div>
+
+	<!-- Right Column | Sign In -->
+	<div class="col-sm-4">
+	<h3>Sign In</h3>
+	<hr>
+	<form class="form" role="form" method="POST" action="/login/" id="login-form">
+		
+		<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+		<br>
+		<input name="password" type="password" class="form-control input-lg" placeholder="Password" required>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Sign in</button>
+	</form>
+	</div>
+
+</div>
+
+{% endblock %}
+
