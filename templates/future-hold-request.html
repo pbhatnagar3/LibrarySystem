@@ -5,18 +5,19 @@
 <form class="form" role="form" method="POST" action="/login/" id="login-form">
 		
 <div class="row">
-
-	<div class="col-sm-6">
-	<hr>
-
+<hr>
+	<div class="col-sm-4 col-sm-offset-4">
 		<input name="ISBN" type="text" class="form-control input-lg" placeholder="Enter ISBN" required autofocus>
 		<br>
 		<button type="submit" class="btn btn-success btn-block btn-lg">Request</button>
 		
 	</form>
 	</div>
-	<div class="col-sm-6">
-	<hr>
+</div>
+<div class="row">
+<hr>
+	<div class="col-sm-4 col-sm-offset-4">
+	
 		<input name="CopyNumber" type="text" class="form-control input-lg" placeholder="Copy Number" required>
 		<br>
 		<input name="ExpectedAvailableDate" type="text" class="form-control input-lg" placeholder="Expected Available Date" required>
@@ -28,4 +29,3 @@
 </div>
 
 {% endblock %}
-1
