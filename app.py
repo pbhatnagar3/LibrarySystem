@@ -1,21 +1,9 @@
-from flask import Flask, render_template
-import mysql.connector as sql
-from mysql.connector import errorcode
+from flask import Flask, render_template, request
+import database
 
-cnx = sql.connect(user='group62', 
-	password='_password', 
-	host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
-	database="libpro")
-
-
-
-# cur = db.cursor()
-# from sqlalchemy import create_engine, MetaData
-
-# engine = create_engine('sqlite:////tmp/test.db', convert_unicode=True)
-# metadata = MetaData(bind=engine)
-
+database.connect()
 app = Flask(__name__)
+
 
 @app.route('/testDB')
 def testDB():
@@ -32,6 +20,17 @@ def library_system():
 def hello_world():
 	name = 'Pujun'
 	return render_template('hello.html', name=name)
+
+@app.route('/login/', methods=['POST', 'GET'])
+def login():
+	if request.method == 'POST':
+		print request.form['username'], request.form['password']
+		# return logged in view
+		return 'logged in!'
+
+
+
+
 	
 if __name__ == '__main__':
 	app.run(debug=True)

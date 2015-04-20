@@ -8,6 +8,7 @@ def connect():
 		password='_password', 
 		host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
 		database="libpro")
+	print "Connected!"
 
 # Other methods
 # All sql goes in this file (except create table statements)
