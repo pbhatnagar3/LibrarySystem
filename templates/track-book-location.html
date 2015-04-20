@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Track Book Location</h3>
+<form class="form" role="form" method="POST" action="/login/" id="login-form">
+		
+<div class="row">
+
+	<div class="col-sm-6">
+	<hr>
+
+		<input name="ISBN" type="text" class="form-control input-lg" placeholder="Enter ISBN" required autofocus>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Locate</button>
+		
+	</form>
+	</div>
+	<div class="col-sm-6">
+	<hr>
+		<input name="FloorNumber" type="text" class="form-control input-lg" placeholder="Floor Number" required>
+		<br>
+		<input name="ShelfNumber" type="text" class="form-control input-lg" placeholder="Shelf Number" required>
+		<br>
+		<input name="Aisle Number" type="text" class="form-control input-lg" placeholder="Aisle Number" required>
+		<br>
+		<input name="Subject" type="text" class="form-control input-lg" placeholder="Subject" required>
+		<br>
+				
+	</div>
+</div>
+
+{% endblock %}
+1

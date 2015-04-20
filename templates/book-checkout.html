@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Track Book Location</h3>
+<form class="form" role="form" method="POST" action="/login/" id="login-form">
+		
+<div class="row">
+
+	<div class="col-sm-6">
+	<hr>
+
+		<input name="ISBN" type="text" class="form-control input-lg" placeholder="ISBN" required autofocus>
+		<br>
+		<input name="CopyNo" type="text" class="form-control input-lg" placeholder="Copy #" required autofocus>
+		<br>
+		<input name="Usename" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+		<br>
+		<input name="CheckOutDate" type="text" class="form-control input-lg" placeholder="Check out Date" required autofocus>
+		<br>
+		<input name="EstimatedReturnDate" type="text" class="form-control input-lg" placeholder="Estimated Return Date" required autofocus>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Confirm</button>
+		
+	</form>
+	</div>
+	
+</div>
+
+{% endblock %}
+1
