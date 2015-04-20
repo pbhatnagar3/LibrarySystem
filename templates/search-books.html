@@ -1,0 +1,65 @@
+	{% extends "base.html" %}
+
+	{% block content %}
+	<h3>Search Books</h3>
+		<hr>
+		<form class="form" role="form" method="POST" action="/search_books/" id="searchbooks-form">
+		
+	<div class="row">
+		
+		<!-- Left Column -->
+		<!--
+		<div class="col-sm-4">
+		<h3>Welcome to LibPro</h3>
+		<p>LibPro is Georgia Tech's most advanced Library Management System</p>
+		</div>-->
+
+		<!-- Middle Column | Sign up -->
+		<div class="col-sm-6 col-sm-offset-3">
+			
+			<input name="isbn" type="text" class="form-control input-lg" placeholder="ISBN" required autofocus>
+			<br>
+			<input name="title" type="text" class="form-control input-lg" placeholder="Title" required autofocus>
+			<br>
+			<input name="author" type="text" class="form-control input-lg" placeholder="Author" required autofocus>
+			<br>
+			<input name="publisher" type="text" class="form-control input-lg" placeholder="Publisher">
+			<br>
+			<input name="edition" type="text" class="form-control input-lg" placeholder="Edition">
+			<br>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 ">
+		
+			<button type="submit" class="btn btn-success btn-block btn-lg">Back</button>
+		</div>
+		<div class="col-sm-4 ">
+		
+			<button type="submit" class="btn btn-success btn-block btn-lg">Search</button>
+		</div>
+		<div class="col-sm-4 ">
+			<button type="submit" class="btn btn-success btn-block btn-lg">Close</button>
+		
+		</div>
+	</div>
+	</form>
+		<!-- Right Column | Sign In -->
+		<!--
+		<div class="col-sm-4">
+		<h3>Sign In</h3>
+		<hr>
+		<form class="form" role="form" method="POST" action="/login/" id="login-form">
+			
+			<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+			<br>
+			<input name="password" type="password" class="form-control input-lg" placeholder="Password" required>
+			<br>
+			<button type="submit" class="btn btn-success btn-block btn-lg">Sign in</button>
+		</form>
+		</div>-->
+
+	</div>
+
+	{% endblock %}
+

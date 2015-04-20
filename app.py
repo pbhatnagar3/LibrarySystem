@@ -38,9 +38,12 @@ def login():
 
 
 @app.route('/create-profile')
-def createProfile():
+def create_profile():
 	return render_template('create-profile.html')
 
+@app.route('/search-books')
+def search_books():
+	return render_template('search-books.html')
 
 
 	
