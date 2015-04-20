@@ -61,6 +61,15 @@ def track_book_location():
 def hold_request():
 	return render_template('request-hold.html')
 
+@app.route('/book-checkout')
+def book_checkout():
+	return render_template('book-checkout.html')
+
+@app.route('/return-book')
+def return_book_screen():
+	return render_template('return-book-screen.html')
+
+
 	
 if __name__ == '__main__':
 	app.run(debug=True)

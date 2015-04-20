@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Return Book</h3>
+<form class="form" role="form" method="POST" action="/login/" id="login-form">
+		
+<div class="row">
+
+	<div class="col-sm-6">
+	<hr>		
+		<input name="ISBN" type="text" class="form-control input-lg" placeholder="ISBN" required autofocus>
+		<br>
+		<input name="CopyNumber" type="text" class="form-control input-lg" placeholder="Copy Number" required autofocus>
+		<br>
+		<input list="returnCondition" name="returnCondition" class="form-control input-lg" placeholder="Return in Damaged Condition" required>
+			<datalist id="returnCondition">
+    			<option value="Yes">
+    			<option value="No">
+	  		</datalist>
+	  	<br>
+		<input name="Username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Return</button>
+
+	</div>
+	
+</div>
+
+{% endblock %}
+

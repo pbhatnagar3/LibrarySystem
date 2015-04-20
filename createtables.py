@@ -68,7 +68,7 @@ TABLES['book_copy'] = (
 TABLES['author'] = (
 	"CREATE TABLE `author` ("
     "  `Name` varchar(50),"
-    "  `Isbn` varchar(50) NOT NULL,"
+    "  `Isbn` varchar(50),"
     "  PRIMARY KEY (`Name`, `Isbn`),"
     "  FOREIGN KEY (`Isbn`) REFERENCES book (`Isbn`)"
     ") ENGINE=InnoDB")
@@ -96,6 +96,33 @@ TABLES['subject'] = (
     "  PRIMARY KEY (`Name`)"
     ") ENGINE=InnoDB")
 
+TABLES['located_on'] = (
+	"CREATE TABLE `located_on` ("
+    "  `Isbn` varchar(50) NOT NULL,"
+    "  `Shelf_number` INT,"
+    "  PRIMARY KEY (`Isbn`, `Shelf_number`),"
+    "  FOREIGN KEY (`Isbn`) REFERENCES book (`Isbn`),"
+    "  FOREIGN KEY (`Shelf_number`) REFERENCES shelf (`Shelf_number`)"
+    ") ENGINE=InnoDB")
+
+TABLES['shelf'] = (
+	"CREATE TABLE `shelf` ("
+    "  `Shelf_number` INT,"
+    "  `Aisle_number` INT,"
+    "  `Floor_number` INT NOT NULL,"
+    "  PRIMARY KEY (`Shelf_number`),"
+    "  FOREIGN KEY (`Floor_number`) REFERENCES floor (`Floor_number`)"
+    ") ENGINE=InnoDB")
+
+TABLES['floor'] = (
+	"CREATE TABLE `floor` ("
+    "  `Floor_number` INT,"
+    "  `Number_Student_Assistant` INT,"
+    "  `Number_of_Copiers` INT,"
+    "  PRIMARY KEY (`Floor_number`)"
+    ") ENGINE=InnoDB")
+
+
 cnx = mysql.connector.connect(user='group62', 
 		password='_password', 
 		host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
@@ -104,14 +131,14 @@ cursor = cnx.cursor()
 
 
 # DROP EXISTING TABLES
-for name, ddl in TABLES.iteritems():
-	try:
-		print("Dropping table {}: ".format(name), end='')
-		cursor.execute("DROP TABLE " + name)
-	except mysql.connector.Error as err:
-		print(err.msg)
-	else:
-		print("OK")
+# for name, ddl in TABLES.iteritems():
+# 	try:
+# 		print("Dropping table {}: ".format(name), end='')
+# 		cursor.execute("DROP TABLE " + name)
+# 	except mysql.connector.Error as err:
+# 		print(err.msg)
+# 	else:
+# 		print("OK")
 
 # CREATE TABLES
 for name, ddl in TABLES.iteritems():
