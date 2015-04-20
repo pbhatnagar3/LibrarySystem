@@ -45,6 +45,9 @@ def create_profile():
 def search_books():
 	return render_template('search-books.html')
 
+@app.route('/request-hold')
+def hold_request():
+	return render_template('request-hold.html')
 
 	
 if __name__ == '__main__':
