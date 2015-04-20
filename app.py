@@ -45,6 +45,17 @@ def create_profile():
 def search_books():
 	return render_template('search-books.html')
 
+@app.route('/request-extension')
+def request_extension():
+	return render_template('request-extension.html')
+
+@app.route('/future-hold-request')
+def future_hold_request():
+	return render_template('future-hold-request.html')
+
+@app.route('/track-book-location')
+def track_book_location():
+	return render_template('track-book-location.html')
 
 	
 if __name__ == '__main__':
