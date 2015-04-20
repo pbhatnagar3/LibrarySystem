@@ -1,7 +1,15 @@
 from flask import Flask, render_template, request
 import database
 
-database.connect()
+try:
+	database.connect()
+except Exception, e:
+	print "failed" 
+else:
+	pass
+finally:
+	pass
+	
 app = Flask(__name__)
 
 
@@ -28,6 +36,10 @@ def login():
 		# return logged in view
 		return 'logged in!'
 
+
+@app.route('/create-profile')
+def createProfile():
+	return render_template('create-profile.html')
 
 
 
