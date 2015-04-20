@@ -74,6 +74,22 @@ def lost_damaged_book():
 	return render_template('lost-damaged-book.html')
 
 
+@app.route('/popular-books-report')
+def popular_books_report():
+	return render_template('popular-books-report.html')
+
+@app.route('/frequent-users-report')
+def frequent_users_report():
+	return render_template('frequent-users-report.html')
+
+@app.route('/popular-subjects-report')
+def frequent_subjects_report():
+	return render_template('popular-subjects-report.html')
+
+
+@app.route('/damaged-books-report')
+def damaged_books_report():
+	return render_template('damaged-books-report.html')
 	
 if __name__ == '__main__':
 	app.run(debug=True)

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Damaged Books Report</h3>	
+<div class="row">
+	<div class="col-sm-6">
+		<input list="MonthList" name="Month" class="form-control input-lg" placeholder="Month" required>
+			<datalist id="MonthList">
+    			<option value="Jan">
+    			<option value="Feb">
+	  		</datalist>
+		<br>
+	</div>
+	<div class="col-sm-6">
+		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required><br>
+		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required><br>
+		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required>
+			<datalist id="SubjectList">
+    			<option value="Mathematics">
+    			<option value="Computer Science">		
+    			<option value="Chemistry">
+    			<option value="Physics">
+    			<option value="Mechanical Engineering">
+    			<option value="Electrical Engineering">
+	  		</datalist>
+		<br>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+		<button type="submit" class="btn btn-success btn-block btn-lg">Show Report</button>
+	</div>
+</div>
+<div class="row">
+	<hr>
+	<br>
+ <!-- Book summery table will go here -->
+ 	<div class="col-sm-12">
+ 		<table class="table">
+ 		<tr>
+		    <th>Month</th>
+		    <th>Title of the Book</th>		
+		    <th>#checkouts</th>
+		</tr>
+		
+  		<tr>
+		    <td>Jill</td>
+		    <td>Smith</td>		
+		    <td>50</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>Eve</td>
+		    <td>Jackson</td>		
+		    <td>94</td>
+		    
+		  </tr>
+		  <tr>
+		    <td>John</td>
+		    <td>Doe</td>		
+		    <td>80</td>
+		    
+		  </tr>
+
+	</table>
+ 	</div>
+</div>
+{% endblock %}
