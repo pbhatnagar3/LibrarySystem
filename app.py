@@ -69,6 +69,10 @@ def book_checkout():
 def return_book_screen():
 	return render_template('return-book-screen.html')
 
+@app.route('/lost-damaged-book')
+def lost_damaged_book():
+	return render_template('lost-damaged-book.html')
+
 
 	
 if __name__ == '__main__':
