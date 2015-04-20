@@ -11,11 +11,21 @@
 	</div>
 
 	<!-- Middle Column | Sign up -->
-	<div class="col-sm-4">
-	<h3>Sign Up</h3>
+<div class="col-sm-4">
+	<h3>New User Registration</h3>
 	<hr>
-	<p>Sign up form goes here</p>
-	</div>
+	<form class="form" role="form" method="POST" action="/register_new_user/" id="newuser-form">
+		
+		<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+		<br>
+		<input name="password" type="password" class="form-control input-lg" placeholder="Password" required>
+		<br>
+		<input name="confirm_password" type="password" class="form-control input-lg" placeholder="ConfirmPassword" required>
+		<br>
+		<button type="submit" class="btn btn-success btn-block btn-lg">Register</button>
+	</form>
+
+</div>
 
 	<!-- Right Column | Sign In -->
 	<div class="col-sm-4">
