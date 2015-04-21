@@ -51,3 +51,31 @@ If(allowExtension):
 
 else:
 	"Notification that an extension cannot be granted for this Issue_id"
+
+#----------------------------------------------------------------------------------------------
+#7 Future Hold Request for a Book
+
+# User provides ISBN of the book he wishes to request a hold, and the system looks for the book_copy that will be available soonest
+# AGAIN WE NEED $Username possibly from the sign in page
+
+# Find the copy_number of ISBN that is checked out
+SELECT Copy_number,Is_damaged FROM book_copy WHERE Is_checked_out = 1 AND Isbn = $ISBN
+
+copyNo_to_returnDate = dict()
+
+for copy_number in Copy_number:
+	SELECT Return_date FROM issue WHERE Isbn = $ISBN AND Copy_id = copy_number
+	copyNo_to_returnDate[copy_number] = Return_date
+
+'''
+On the screen, the program will show two fields
+1) Copy Number = min(copyNo_to_returnDate,key=copyNo_to_returnDate.get)
+2) Expected available date = copyNo_to_returnDate[min(copyNo_to_returnDate,key=copyNo_to_returnDate.get)]  
+'''
+
+# When OK button is clicked
+INSERT INTO book_copy VALUES($Username,$Is_damaged,0,1,$Copy_number,$Isbn)
+
+
+
+
