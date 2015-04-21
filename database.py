@@ -37,5 +37,12 @@ def login(username, password):
 		return False
 		cur.close()
 	
-	
+def create_profile(username, name, dob, gender, email, is_faculty, address, department):
+	print name
+	cur = db.cursor()
+	query = "INSERT into student_faculty values(%s, %s, %s, %s,%s, %s,%s, %s,%s, %s)"
+	cur.execute(query, (username, name, dob, gender, 'false',email, address,  is_faculty, '100', department))
+	db.commit()
+	cur.close()
+	return True
 

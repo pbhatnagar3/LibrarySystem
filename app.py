@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import database
-	
 
 app = Flask(__name__)
-
+app.secret_key = "YOLOSWAG"
 
 @app.route('/testDB')
 def testDB():
@@ -32,6 +31,7 @@ def register_user():
 
 	u = database.new_user(f['username'], f['password'])
 	print u
+	session['username'] = u
 	return redirect('/create-profile/')
 
 
@@ -51,9 +51,24 @@ def login():
 		return 'wtf!'
 
 
-@app.route('/create-profile/')
+@app.route('/create-profile/', methods=['POST','GET'])
 def create_profile():
-	return render_template('create-profile.html')
+	if request.method == 'GET':
+		return render_template('create-profile.html')	
+	elif request.method == 'POST':
+		f = request.form
+		username = session.get("username", None)
+		print "SEE THIS ", username
+		if database.create_profile(username, f['first-name'] + f['last-name'], f['dob'], f['gender'], f['email'], f['is-faculty'], f['address'], f['department']):
+			pass
+	# 	if database.login(f['username'], f['password']):
+	# 		return redirect('/search-books/')
+	# 	else:
+	# 		return render_template('index.html', login_error='Invalid username and password')
+	# 	# return logged in view
+	# 	return 'logged in!'
+	# else:
+	# 	return 'wtf!'
 
 
 @app.route('/search-books/')

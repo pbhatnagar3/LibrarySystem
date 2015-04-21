@@ -2,42 +2,40 @@
 
 {% block content %}
 <h3>Create Profile</h3>
-<form class="form" role="form" method="POST" action="/login/" id="login-form">
+<form class="form" role="form" method="POST" action="/create-profile/" id="create-profile-form">
 		
 <div class="row">
 
 	<div class="col-sm-6">
 	<hr>		
-		<input name="First-Name" type="text" class="form-control input-lg" placeholder="First Name" required autofocus>
+		<input name="first-name" type="text" class="form-control input-lg" placeholder="First Name" required autofocus>
 		<br>
-		<input name="DOB" type="text" class="form-control input-lg" placeholder="Date of Birth" required autofocus>
+		<input name="dob" type="text" class="form-control input-lg" placeholder="Date of Birth" required autofocus>
 		<br>
 		
-		<input name="Email" type="text" class="form-control input-lg" placeholder="Email" required>
+		<input name="email" type="text" class="form-control input-lg" placeholder="Email" required>
 		<br>
-		<input name="Address" type="text" class="form-control input-lg" placeholder="Address" rows='3' required>
+		<input name="address" type="text" class="form-control input-lg" placeholder="Address" rows='3' required>
 		<br>
 	</div>
 	<div class="col-sm-6">
 	<hr>
-		<input name="Last-Name" type="text" class="form-control input-lg" placeholder="Last Name" required>
+		<input name="last-name" type="text" class="form-control input-lg" placeholder="Last Name" required>
 		<br>
-		<input list="Genders" name="Gender" class="form-control input-lg" placeholder="Genders 	" required>
+		<input list="Genders" name="gender" class="form-control input-lg" placeholder="Gender 	" required>
 			<datalist id="Genders">
     			<option value="Male">
     			<option value="Female">
 	  		</datalist>
 		<br>
-		<input name="Email" type="text" class="form-control input-lg" placeholder="Email" required>
-		<br>
-		<input list="isFacultyList" name="isFaculty" class="form-control input-lg" placeholder="Are you a faculty" required>
+		<input list="isFacultyList" name="is-faculty" class="form-control input-lg" placeholder="Are you a faculty" required>
 			<datalist id="isFacultyList">
     			<option value="Yes">
     			<option value="No">
 	  		</datalist>
 		<br>
 
-		<input list="Departments" name="Department" class="form-control input-lg" placeholder="Department" required>
+		<input list="Departments" name="department" class="form-control input-lg" placeholder="Department" required>
 			<datalist id="Departments">
     			<option value="ECE">
     			<option value="Computer Science">
