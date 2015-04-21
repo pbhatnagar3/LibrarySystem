@@ -28,9 +28,7 @@ def hello_world():
 		name = 'Pujun POST'
 		return render_template('hello.html', name=name)
 	else:
-		return 'wtf' 
-
-
+		return 'wtf'
 
 
 @app.route('/register/', methods=['POST', 'GET'])
@@ -53,6 +51,7 @@ def login():
 		print "hit there"
 		f = request.form
 		if database.login(f['username'], f['password']):
+			session['username'] = u
 			return redirect('/search-books/')
 		else:
 			return render_template('index.html', login_error='Invalid username and password')
@@ -158,6 +157,7 @@ def book_confirmation():
 def request_extension():
 	return render_template('request-extension.html')
 
+
 @app.route('/future-hold-request')
 def future_hold_request():
 	return render_template('future-hold-request.html')
@@ -166,11 +166,21 @@ def future_hold_request():
 def track_book_location():
 	return render_template('track-book-location.html')
 
-@app.route('/request-hold/', methods=['POST','GET'])
+
+@app.route('/request-hold/', methods=['GET', 'POST'])
 def hold_request():
-	checkout_books = session.get("checkout_books", None)
-	reserved_books = session.get("reserved_books", None) 
-	return render_template('request-hold.html', checkout_books = checkout_books, reserved_books = reserved_books)
+	if request.method == 'GET':
+		checkout_books = session.get("checkout_books", None)
+		reserved_books = session.get("reserved_books", None)
+		return render_template('request-hold.html', checkout_books = checkout_books, reserved_books = reserved_books)
+	elif request.method == 'POST':
+		print 'posting'
+		f = request.form
+		database.hold_request(f['selected-book-isbn'], session['username'])
+		return render_template('book-confirmation.html')
+	else:
+		return 'wtf!'
+
 
 @app.route('/book-checkout')
 def book_checkout():

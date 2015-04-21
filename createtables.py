@@ -54,7 +54,8 @@ TABLES['issue'] = (
 
 TABLES['book_copy'] = (
 	"CREATE TABLE `book_copy` ("
-    "  `Future_requester` varchar(50) NOT NULL,"
+    "  `Future_requester` varchar(50),"
+    "  `Hold_expiry` DATE,"
     "  `Is_damaged` BOOLEAN NOT NULL,"
     "  `Is_checked_out` BOOLEAN NOT NULL,"
     "  `Is_on_hold` BOOLEAN NOT NULL,"
@@ -123,10 +124,15 @@ TABLES['floor'] = (
     ") ENGINE=InnoDB")
 
 
+# cnx = mysql.connector.connect(user='group62', 
+# 		password='password', 
+# 		host="localhost", 
+#         port="8889",
+# 		database="libpro")
 cnx = mysql.connector.connect(user='group62', 
-		password='_password', 
-		host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
-		database="libpro")
+        password='_password', 
+        host="cs4400-library-management.c0erkhridnqw.us-east-1.rds.amazonaws.com", 
+        database="libpro")
 cursor = cnx.cursor()
 
 

@@ -73,7 +73,7 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 	to_return = []
 	print "RESULT", result
 	for r in result:
-		print r[0]
+		print r[0], "Getting Copies"
 		cur.execute("SELECT count(Copy_number) from book_copy where Isbn = %s AND Is_checked_out = 0 AND Is_on_hold = 0" % (r[0]))
 		num_copies = cur.fetchall()
 		print "number of copies", num_copies
@@ -85,3 +85,29 @@ def create_issue(isbn, hold_request_date, estimated_return_date):
 	print hold_request_date
 	print estimated_return_date
 	return True
+
+
+def hold_request(isbn, future_requester):
+	# When the submit button is clicked, select the lowest copy_number available of the selected ISBN
+	query = "SELECT MIN(Copy_number) FROM book_copy WHERE Isbn=" + isbn + " AND Is_checked_out=0 AND Is_on_hold=0"
+	print query
+	cur = db.cursor()
+	cur.execute(query)
+	copy_number, = cur.fetchone()
+	#TODO Add hold expiry
+	expiry = datetime.now() + timedelta(days=3)
+	query = "UPDATE book_copy SET Future_requester=%s, Is_on_hold=1, Hold_expiry=%s WHERE Isbn=%s AND Copy_number=%s"
+	values = (future_requester, expiry, isbn, copy_number)
+	print query % values
+	cur.execute(query, values)
+	db.commit()
+	cur.close()
+
+
+
+	
+
+
+
+
+
