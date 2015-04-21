@@ -14,8 +14,8 @@
 <div class="col-sm-4">
 	<h3>New User Registration</h3>
 	<hr>
-	<form class="form" role="form" method="POST" action="/register_new_user/" id="newuser-form">
-		
+	<form class="form" role="form" method="POST" action="/register/" id="newuser-form">
+		<p>{{register_error}}</p>
 		<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
 		<br>
 		<input name="password" type="password" class="form-control input-lg" placeholder="Password" required>

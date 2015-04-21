@@ -1,15 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import database
-
-try:
-	database.connect()
-except Exception, e:
-	print "failed" 
-else:
-	pass
-finally:
-	pass
 	
+
 app = Flask(__name__)
 
 
@@ -19,31 +11,51 @@ def testDB():
 	print cur.fetchall()
 	return 'hi'
 
+
 @app.route('/')
 def library_system():
 	school_name = 'Georgia Tech'
 	return render_template('index.html', school_name = school_name)
+
 
 @app.route('/hello')
 def hello_world():
 	name = 'Pujun'
 	return render_template('hello.html', name=name)
 
+
+@app.route('/register/', methods=['POST', 'GET'])
+def register_user():
+	f = request.form
+	if f['password'] != f['confirm_password']:
+		return render_template('index.html', register_error="Passwords don't match")
+
+	u = database.new_user(f['username'], f['password'])
+	print u
+	return redirect('/create-profile/')
+
+
 @app.route('/login/', methods=['POST', 'GET'])
 def login():
-	if request.method == 'POST':
+	if request.method == 'GET':
+		return render_template('index.html')
+	elif request.method == 'POST':
 		print request.form['username'], request.form['password']
 		# return logged in view
 		return 'logged in!'
+	else:
+		return 'wtf!'
 
 
-@app.route('/create-profile')
+@app.route('/create-profile/')
 def create_profile():
 	return render_template('create-profile.html')
+
 
 @app.route('/search-books')
 def search_books():
 	return render_template('search-books.html')
+
 
 @app.route('/request-extension')
 def request_extension():
