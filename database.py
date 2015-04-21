@@ -79,3 +79,9 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 		print "number of copies", num_copies
 		to_return.append(r + num_copies[0])
 	return to_return
+
+def create_issue(isbn, hold_request_date, estimated_return_date):
+	print "ISBN", isbn
+	print hold_request_date
+	print estimated_return_date
+	return True

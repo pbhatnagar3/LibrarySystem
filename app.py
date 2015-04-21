@@ -4,6 +4,8 @@ import database
 app = Flask(__name__)
 app.secret_key = "YOLOSWAG"
 
+
+
 @app.route('/testDB')
 def testDB():
 	cur.execute("SELECT sno FROM test")
@@ -17,10 +19,18 @@ def library_system():
 	return render_template('index.html', school_name = school_name)
 
 
-@app.route('/hello')
+@app.route('/hello', methods=['POST', 'GET'])
 def hello_world():
-	name = 'Pujun'
-	return render_template('hello.html', name=name)
+	if request.method == 'GET':
+		name = 'Pujun GET'
+		return render_template('hello.html', name=name)
+	elif request.method == 'POST':
+		name = 'Pujun POST'
+		return render_template('hello.html', name=name)
+	else:
+		return 'wtf' 
+
+
 
 
 @app.route('/register/', methods=['POST', 'GET'])
@@ -35,11 +45,12 @@ def register_user():
 	return redirect('/create-profile/')
 
 
-@app.route('/login/', methods=['POST', 'GET'])
+@app.route('/login/',  methods=['POST', 'GET'])
 def login():
 	if request.method == 'GET':
 		return render_template('index.html')
 	elif request.method == 'POST':
+		print "hit there"
 		f = request.form
 		if database.login(f['username'], f['password']):
 			return redirect('/search-books/')
@@ -114,6 +125,35 @@ def search_books():
 		return 'wtf!'
 
 
+
+@app.route('/book-confirmation', methods=['GET', 'POST'])
+def book_confirmation():
+	# print "this is the beginning"
+	# if request.method == 'POST':
+	# 	print "THIS IS GEORGIAAAA"
+	# 	print "hello bitches"
+	# 	print "hello", request.form['selected-book-isbn']
+	# 	database.create_issue(f['selected-book-isbn'], f['selected-book-isbn'], f['selected-book-isbn'])		
+	# 	return render_template("book-confirmation.html", issue_id = issue_id)
+	# else:
+	# 	return render_template("book-confirmation.html")
+	if request.method == 'GET':
+		name = 'Pujun GET'
+		return render_template('book-confirmation.html', name=name)
+	elif request.method == 'POST':
+		print "THIS IS GEORGIAAA"
+		print "hello bitches"
+		name = "chill dude"
+		f = request.form
+		print f.values
+		database.create_issue(f['selected-book-isbn'], f['hold-request-date'], f['estimated-return-date'])
+		return render_template('book-confirmation.html', issue_id=name)
+	else:
+		return 'wtf' 
+
+
+
+
 @app.route('/request-extension')
 def request_extension():
 	return render_template('request-extension.html')
@@ -129,7 +169,7 @@ def track_book_location():
 @app.route('/request-hold/', methods=['POST','GET'])
 def hold_request():
 	checkout_books = session.get("checkout_books", None)
-	reserved_books = session.get("reserved_books", None)
+	reserved_books = session.get("reserved_books", None) 
 	return render_template('request-hold.html', checkout_books = checkout_books, reserved_books = reserved_books)
 
 @app.route('/book-checkout')
