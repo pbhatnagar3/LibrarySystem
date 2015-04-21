@@ -60,15 +60,13 @@ def create_profile():
 		username = session.get("username", None)
 		print "SEE THIS ", username
 		if database.create_profile(username, f['first-name'] + f['last-name'], f['dob'], f['gender'], f['email'], f['is-faculty'], f['address'], f['department']):
-			pass
-	# 	if database.login(f['username'], f['password']):
-	# 		return redirect('/search-books/')
-	# 	else:
-	# 		return render_template('index.html', login_error='Invalid username and password')
-	# 	# return logged in view
-	# 	return 'logged in!'
-	# else:
-	# 	return 'wtf!'
+			return redirect('/search-books/')
+		else:
+			return render_template('index.html', login_error='Invalid username and password')
+		# return logged in view
+		return 'logged in!'
+	else:
+		return 'wtf!'
 
 
 @app.route('/search-books/')
