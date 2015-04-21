@@ -3,8 +3,8 @@
 	{% block content %}
 	<h3>Search Books</h3>
 		<hr>
-		<form class="form" role="form" method="POST" action="/search_books/" id="searchbooks-form">
-		
+		<form class="form" role="form" method="POST" action="/search-books/" id="searchbooks-form">
+		<p>{{search_error}}</p>
 	<div class="row">
 		
 		<!-- Left Column -->
@@ -16,34 +16,32 @@
 
 		<!-- Middle Column | Sign up -->
 		<div class="col-sm-6">
-			
-			<input name="isbn" type="text" class="form-control input-lg" placeholder="ISBN" required autofocus>
+			<input name="isbn" type="text" class="form-control input-lg" placeholder="ISBN" autofocus>
 			<br>
-			<input name="title" type="text" class="form-control input-lg" placeholder="Title" required autofocus>
+			<input name="title" type="text" class="form-control input-lg" placeholder="Title">
 			<br>
-			<input name="author" type="text" class="form-control input-lg" placeholder="Author" required autofocus>
+			<input name="author" type="text" class="form-control input-lg" placeholder="Author">
 			<br>
-			
 		</div>
-	<div class="col-sm-6">
-		
-		<input name="publisher" type="text" class="form-control input-lg" placeholder="Publisher">
+
+		<div class="col-sm-6">
+			<input name="publisher" type="text" class="form-control input-lg" placeholder="Publisher">
 			<br>
 			<input name="edition" type="text" class="form-control input-lg" placeholder="Edition">
 			<br>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-sm-4 ">
 		
-			<button type="submit" class="btn btn-success btn-block btn-lg">Back</button>
+			<a href="#" class="btn btn-success btn-block btn-lg">Back</a>
 		</div>
 		<div class="col-sm-4 ">
-		
 			<button type="submit" class="btn btn-success btn-block btn-lg">Search</button>
 		</div>
 		<div class="col-sm-4 ">
-			<button type="submit" class="btn btn-success btn-block btn-lg">Close</button>
+			<a href="#" class="btn btn-success btn-block btn-lg">Close</a>
 		
 		</div>
 	</div>
