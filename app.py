@@ -103,12 +103,11 @@ def search_books():
 			publisher=f['publisher'],
 			edition=f['edition'], 
 			reserved= 1)
-		print "I am here"
 
 		# return render_template('search-results.html', books=books)
 		session['checkout_books'] = checkout_books
 		session['reserved_books'] = reserved_books
-		
+				
 		print checkout_books, "BOOKS"
 		return redirect('/request-hold/')
 	else:
