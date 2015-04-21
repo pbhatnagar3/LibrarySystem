@@ -26,9 +26,11 @@ def new_user(username, password):
 def login(username, password):
 	print username, password
 	cur = db.cursor()
-	query = "SELECT * FROM user WHERE Username=%s AND Password=%s"
+	query = "SELECT EXISTS(SELECT * FROM user WHERE Username=%s AND Password=%s)"
 	cur.execute(query, (username, password))
-	if cur.fetchone():
+	exists, = cur.fetchone()
+	print exists
+	if exists:
 		return True
 		cur.close()
 	else:
