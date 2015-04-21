@@ -71,8 +71,9 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 	# print "SEE THIS", cur.fetchall()
 	result = cur.fetchall()
 	to_return = []
-	print result, "here is the result"
+	print "RESULT", result
 	for r in result:
+		print r[0]
 		cur.execute("SELECT count(Copy_number) from book_copy where Isbn = %s AND Is_checked_out = 0 AND Is_on_hold = 0" % (r[0]))
 		num_copies = cur.fetchall()
 		print "number of copies", num_copies
