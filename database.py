@@ -23,4 +23,17 @@ def new_user(username, password):
 	cur.close()
 	return username
 	
+def login(username, password):
+	print username, password
+	cur = db.cursor()
+	query = "SELECT * FROM user WHERE Username=%s AND Password=%s"
+	cur.execute(query, (username, password))
+	if cur.fetchone():
+		return True
+		cur.close()
+	else:
+		return False
+		cur.close()
+	
+	
 

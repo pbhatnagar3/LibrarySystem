@@ -40,7 +40,11 @@ def login():
 	if request.method == 'GET':
 		return render_template('index.html')
 	elif request.method == 'POST':
-		print request.form['username'], request.form['password']
+		f = request.form
+		if database.login(f['username'], f['password']):
+			return redirect('/search-books/')
+		else:
+			return render_template('index.html', login_error='Invalid username and password')
 		# return logged in view
 		return 'logged in!'
 	else:
@@ -52,7 +56,7 @@ def create_profile():
 	return render_template('create-profile.html')
 
 
-@app.route('/search-books')
+@app.route('/search-books/')
 def search_books():
 	return render_template('search-books.html')
 

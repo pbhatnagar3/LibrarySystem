@@ -32,7 +32,7 @@
 	<h3>Sign In</h3>
 	<hr>
 	<form class="form" role="form" method="POST" action="/login/" id="login-form">
-		
+		<p class="text-error">{{login_error}}</p>
 		<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
 		<br>
 		<input name="password" type="password" class="form-control input-lg" placeholder="Password" required>
