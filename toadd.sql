@@ -76,6 +76,22 @@ On the screen, the program will show two fields
 # When OK button is clicked
 INSERT INTO book_copy VALUES($Username,$Is_damaged,0,1,$Copy_number,$Isbn)
 
+#----------------------------------------------------------------------------------------------
+#8 Track Location 
+
+# User enters ISBN and clicks "Locate". The program will show Floor Number, Shelf Number, Aisle Number, and Subject
+SELECT Shelf_number FROM located_on WHERE Isbn = $ISBN
+# Once we know the Shelf_number
+SELECT Aisle_number,Floor_number FROM shelf WHERE Shelf_number = $Shelf_number
+# Find Subject name
+SELECT Subject_name FROM book WHERE Isbn = $ISBN
+
+'''
+Output the following
+1) Floor Number
+2) Aisle Number
+3) Shelf Number
+4) Subject
 
 
 
