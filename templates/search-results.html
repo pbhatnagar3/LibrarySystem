@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/search-books/" class="btn btn-default">Search Again</a>
+<table class="table">
+	{% for b in books %}
+	<tr>
+		<td>{{b.0}}</td>
+		<td>{{b.1}}</td>
+		<td>{{b.2}}</td>
+		<td>{{b.3}}</td>
+		<td>{{b.4}}</td>
+		<td>{{b.5}}</td>
+		<td>{{b.6}}</td>
+		<td>{{b.7}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% endblock %}

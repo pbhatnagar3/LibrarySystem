@@ -69,9 +69,34 @@ def create_profile():
 		return 'wtf!'
 
 
-@app.route('/search-books/')
+@app.route('/search-books/', methods=['POST','GET'])
 def search_books():
-	return render_template('search-books.html')
+	if request.method == 'GET':
+		return render_template('search-books.html')
+
+	elif request.method == 'POST':
+		f = {}
+		# clean form
+		for k,v in request.form.items():
+			f[k] = v.strip()
+			if f[k] == '': f[k] = None
+		if f['isbn'] != None: f['isbn'] = int(f['isbn'])
+
+		# validate
+		if f['isbn'] == None and f['title'] == None and f['author'] == None:
+			return render_template('search-books.html', search_error="Either ISBN, Title, or Author must be filled.")
+		
+		#search
+		books = database.search_books(
+			isbn=f['isbn'],
+			title=f['title'],
+			author=f['author'],
+			publisher=f['publisher'],
+			edition=f['edition'])
+
+		return render_template('search-results.html', books=books)
+	else:
+		return 'wtf!'
 
 
 @app.route('/request-extension')

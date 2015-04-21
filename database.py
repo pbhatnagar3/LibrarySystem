@@ -46,3 +46,24 @@ def create_profile(username, name, dob, gender, email, is_faculty, address, depa
 	cur.close()
 	return True
 
+def search_books(isbn, title, author, publisher, edition):
+	query = "SELECT * FROM book WHERE "
+	params = {'Isbn':isbn, 
+		'Title':title, 
+		'Author':author,
+		'Publisher':publisher,
+		'Edition':edition}
+
+	to_query = [a[0] for a in params.items() if a[1]!=None]
+	values = [params[q] for q in to_query]
+	# print to_query
+	# print values
+
+	for i,p in enumerate(to_query):
+		if i > 0: query += ' AND ' + p + '=%s'
+		else: query += p + '=%s'
+
+	# print query, tuple(values)
+	cur = db.cursor()
+	cur.execute( query, tuple(values) )
+	return cur.fetchall()
