@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Hold Reuest for a book</h3>
+<h3>Hold Request for a book</h3>
 <form class="form" role="form" method="POST" action="/requested-book/" id="request-book">
 
 <div class="row">
@@ -9,36 +9,19 @@
  	<div class="col-sm-12">
  		<h4>Book Available Summary</h4>	
  		<table class="table">
- 		<tr>
-		    <th>ISBN</th>
-		    <th>Title of the Book</th>		
-		    <th>Edition</th>
-		    <th># copies available</th>
-		</tr>
-		
-  		<tr>
-		    <td>Jill</td>
-		    <td>Smith</td>		
-		    <td>50</td>
-		    <td>50</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>Eve</td>
-		    <td>Jackson</td>		
-		    <td>94</td>
-		    <td>50</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>John</td>
-		    <td>Doe</td>		
-		    <td>80</td>
-		    <td>50</td>
-		    
-		  </tr>
-
-	</table>
+	{% for b in checkout_books %}
+	<tr>
+		<td>{{b.0}}</td>
+		<td>{{b.1}}</td>
+		<td>{{b.2}}</td>
+		<td>{{b.3}}</td>
+		<td>{{b.4}}</td>
+		<td>{{b.5}}</td>
+		<td>{{b.6}}</td>
+		<td>{{b.7}}</td>
+	</tr>
+	{% endfor %}
+</table>
  	</div>
 </div>
 		
@@ -81,36 +64,19 @@
  		<hr>
  		<h4>Books on reserve</h4>	
  		<table class="table">
- 		<tr>
-		    <th>ISBN</th>
-		    <th>Title of the Book</th>		
-		    <th>Edition</th>
-		    <th># copies available</th>
-		</tr>
-		
-  		<tr>
-		    <td>Jill</td>
-		    <td>Smith</td>		
-		    <td>50</td>
-		    <td>50</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>Eve</td>
-		    <td>Jackson</td>		
-		    <td>94</td>
-		    <td>50</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>John</td>
-		    <td>Doe</td>		
-		    <td>80</td>
-		    <td>50</td>
-		    
-		  </tr>
-
-	</table>
+	{% for b in reserved_books %}
+	<tr>
+		<td>{{b.0}}</td>
+		<td>{{b.1}}</td>
+		<td>{{b.2}}</td>
+		<td>{{b.3}}</td>
+		<td>{{b.4}}</td>
+		<td>{{b.5}}</td>
+		<td>{{b.6}}</td>
+		<td>{{b.7}}</td>
+	</tr>
+	{% endfor %}
+</table>
  	</div>
 </div>
 

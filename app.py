@@ -87,14 +87,30 @@ def search_books():
 			return render_template('search-books.html', search_error="Either ISBN, Title, or Author must be filled.")
 		
 		#search
-		books = database.search_books(
+		print "HELLLLLO"
+		checkout_books = database.search_books(
 			isbn=f['isbn'],
 			title=f['title'],
 			author=f['author'],
 			publisher=f['publisher'],
-			edition=f['edition'])
+			edition=f['edition'], 
+			reserved= 0)
 
-		return render_template('search-results.html', books=books)
+		reserved_books = database.search_books(
+			isbn=f['isbn'],
+			title=f['title'],
+			author=f['author'],
+			publisher=f['publisher'],
+			edition=f['edition'], 
+			reserved= 1)
+		print "I am here"
+
+		# return render_template('search-results.html', books=books)
+		session['checkout_books'] = checkout_books
+		session['reserved_books'] = reserved_books
+		
+		print checkout_books, "BOOKS"
+		return redirect('/request-hold/')
 	else:
 		return 'wtf!'
 
@@ -111,9 +127,11 @@ def future_hold_request():
 def track_book_location():
 	return render_template('track-book-location.html')
 
-@app.route('/request-hold')
+@app.route('/request-hold/', methods=['POST','GET'])
 def hold_request():
-	return render_template('request-hold.html')
+	checkout_books = session.get("checkout_books", None)
+	reserved_books = session.get("reserved_books", None)
+	return render_template('request-hold.html', checkout_books = checkout_books, reserved_books = reserved_books)
 
 @app.route('/book-checkout')
 def book_checkout():
