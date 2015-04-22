@@ -24,11 +24,10 @@ def new_user(username, password):
 	return username
 	
 def login(username, password):
-	print username, password
 	cur = db.cursor()
 	query = "SELECT EXISTS(SELECT * FROM user WHERE Username=%s AND Password=%s)"
 	cur.execute(query, (username, password))
-	exists, = cur.fetchone()
+	exists, = cur.fetchone() # fetchone returns a tuple
 	print exists
 	if exists:
 		return True
@@ -36,7 +35,14 @@ def login(username, password):
 	else:
 		return False
 		cur.close()
-	
+
+def get_user(username):
+	cur = db.cursor()
+	query = "SELECT * FROM user WHERE Username=%s"
+	cur.execute( query, (username,) )
+	return cur.fetchone()
+
+
 def create_profile(username, name, dob, gender, email, is_faculty, address, department):
 	print name
 	cur = db.cursor()

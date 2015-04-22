@@ -11,14 +11,8 @@ TABLES['user'] = (
     "CREATE TABLE `user` ("
     "  `Username` varchar(50) NOT NULL,"
     "  `Password` varchar(50) NOT NULL,"
+    "  `Is_staff` BOOLEAN DEFAULT 0,"
     "  PRIMARY KEY (`Username`)"
-    ") ENGINE=InnoDB")
-
-TABLES['staff'] = (
-	"CREATE TABLE `staff` ("
-    "  `Username` varchar(50) NOT NULL,"
-    "  PRIMARY KEY (`Username`),"
-    "  FOREIGN KEY (`Username`) REFERENCES user (`Username`)"
     ") ENGINE=InnoDB")
 
 TABLES['student_faculty'] = (
@@ -136,28 +130,32 @@ cnx = mysql.connector.connect(user='group62',
 cursor = cnx.cursor()
 
 
-# DROP EXISTING TABLES
-# for name, ddl in TABLES.iteritems():
-# 	try:
-# 		print("Dropping table {}: ".format(name), end='')
-# 		cursor.execute("DROP TABLE " + name)
-# 	except mysql.connector.Error as err:
-# 		print(err.msg)
-# 	else:
-# 		print("OK")
+def drop_tables():
+    for name, ddl in TABLES.iteritems():
+    	try:
+    		print("Dropping table {}: ".format(name), end='')
+    		cursor.execute("DROP TABLE " + name)
+    	except mysql.connector.Error as err:
+    		print(err.msg)
+    	else:
+    		print("OK")
 
 # CREATE TABLES
-for name, ddl in TABLES.iteritems():
-    try:
-        print("Creating table {}: ".format(name), end='')
-        cursor.execute(ddl)
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
-            print("already exists.")
+def create_tables():
+    for name, ddl in TABLES.iteritems():
+        try:
+            print("Creating table {}: ".format(name), end='')
+            cursor.execute(ddl)
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+                print("already exists.")
+            else:
+                print(err.msg)
         else:
-            print(err.msg)
-    else:
-        print("OK")
+            print("OK")
+
+# drop_tables()
+create_tables()
 
 cursor.close()
 cnx.close()

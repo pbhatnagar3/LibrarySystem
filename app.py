@@ -48,15 +48,16 @@ def login():
 	if request.method == 'GET':
 		return render_template('index.html')
 	elif request.method == 'POST':
-		print "hit there"
 		f = request.form
 		if database.login(f['username'], f['password']):
-			session['username'] = u
-			return redirect('/search-books/')
+			session['username'] = f['username']
+			user = database.get_user(f['username'])
+			if user[2]: # user is staff
+				return redirect('/book-checkout/')
+			else:
+				return redirect('/search-books/')
 		else:
 			return render_template('index.html', login_error='Invalid username and password')
-		# return logged in view
-		return 'logged in!'
 	else:
 		return 'wtf!'
 
@@ -182,7 +183,7 @@ def hold_request():
 		return 'wtf!'
 
 
-@app.route('/book-checkout')
+@app.route('/book-checkout/')
 def book_checkout():
 	return render_template('book-checkout.html')
 
