@@ -53,28 +53,47 @@ def create_profile(username, name, dob, gender, email, is_faculty, address, depa
 	return True
 
 def search_books(isbn, title, author, publisher, edition, reserved):
+	'''
+	cur = db.cursor()
+	if author is not None:
+		query = "SELECT Isbn FROM author WHERE Name = %s" 
+		values = (author,) 
+		cur.execute(query,values)
+		result = cur.fetchall()
+		print "THIS IS THE RESULT" + result	
+		return result
+	'''	
+
+		
 	query = "SELECT * FROM book WHERE "
-	params = {'Isbn':isbn,
-		'Title':title, 
-		'Author':author,
-		'Publisher':publisher,
-		'Edition':edition, 
-		'Is_reserved': reserved}
+
+	params = {'Isbn':isbn, 
+			'Title':title, 
+			#'Author':author,
+			'Publisher':publisher,
+			'Edition':edition, 
+			'Is_reserved': reserved}
 
 	to_query = [a[0] for a in params.items() if a[1]!=None]
 	values = [params[q] for q in to_query]
-	# print to_query
-	# print values
+		# print to_query
+		# print values
 
 	for i,p in enumerate(to_query):
 		if i > 0: query += ' AND ' + p + '=%s'
 		else: query += p + '=%s'
 
-	# print query, tuple(values)
+		# print query, tuple(values)
 	print "QUERY", query
+	if author is not None:
+		query = query + " AND (Isbn IN (SELECT Isbn FROM author WHERE Name = %s))" 
+		values.append(author)
 	cur = db.cursor()
+	print "*********************"
+	print query % tuple(values)
+	print "********************"
 	cur.execute( query, tuple(values) )
-	# print "SEE THIS", cur.fetchall()
+		# print "SEE THIS", cur.fetchall()
 	result = cur.fetchall()
 	to_return = []
 	print "RESULT", result
@@ -84,6 +103,8 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 		num_copies = cur.fetchall()
 		print "number of copies", num_copies
 		to_return.append(r + num_copies[0])
+
+
 	return to_return
 
 def create_issue(isbn, hold_request_date, estimated_return_date):
