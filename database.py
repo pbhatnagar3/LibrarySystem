@@ -103,6 +103,63 @@ def hold_request(isbn, future_requester):
 	db.commit()
 	cur.close()
 
+def createBooks():
+	'''
+	TABLES['book'] = (
+	"CREATE TABLE `book` ("
+    "  `Isbn` varchar(50) NOT NULL,"
+    "  `Title` varchar(100) NOT NULL,"
+    "  `Is_reserved` BOOLEAN NOT NULL,"
+    "  `Edition` INT,"
+    "  `Publisher` varchar(100),"
+    "  `Place_of_publication` VARCHAR(100),"
+    "  `Copyright` SMALLINT,"
+    "  `Subject_name` VARCHAR(50) NOT NULL,"
+    "  `Cost` REAL NOT NULL,"
+
+    "  PRIMARY KEY (`Isbn`),"
+    "  FOREIGN KEY (`Subject_name`) REFERENCES subject (`Name`)"
+    ") ENGINE=InnoDB")
+	'''
+	cur = db.cursor()
+	books = ['ECE2026','ECE2020','ECE2040','ECE2035','ECE2036']
+	isbn = ['2026','2020','2040','2035','2036']
+	on_reserve = [0,0,1,1,0]
+	for i in range(0,5):
+		query = "INSERT INTO book VALUES(%s,%s,%s,1,%s,%s,1,%s,1000)"
+		values = (isbn[i],books[i],on_reserve[i],"GaTech","Georgia","ECE")
+		cur.execute(query,values)
+		db.commit()
+	'''
+	TABLES['book_copy'] = (
+	"CREATE TABLE `book_copy` ("
+    "  `Future_requester` varchar(50),"
+    "  `Hold_expiry` DATE,"
+    "  `Is_damaged` BOOLEAN NOT NULL,"
+    "  `Is_checked_out` BOOLEAN NOT NULL,"
+    "  `Is_on_hold` BOOLEAN NOT NULL,"
+    "  `Copy_number` INT,"
+    "  `Isbn` VARCHAR(50) NOT NULL,"
+    "  PRIMARY KEY (`Copy_number`, `Isbn`),"
+    "  FOREIGN KEY (`Future_requester`) REFERENCES user (`Username`),"
+    "  FOREIGN KEY (`Isbn`) REFERENCES book (`Isbn`)"
+    ") ENGINE=InnoDB")
+	'''
+	for book in isbn:
+		for i in range(1,5):
+			query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(0,0,0,%s,%s)"
+			values = (i,book)
+			cur.execute(query,values)
+			db.commit()
+
+
+	cur.close()	
+
+
+
+if __name__ == '__main__':
+	createBooks()
+
 
 
 	
