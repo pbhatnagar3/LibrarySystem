@@ -54,7 +54,7 @@ def create_profile(username, name, dob, gender, email, is_faculty, address, depa
 
 def search_books(isbn, title, author, publisher, edition, reserved):
 	query = "SELECT * FROM book WHERE "
-	params = {'Isbn':isbn, 
+	params = {'Isbn':isbn,
 		'Title':title, 
 		'Author':author,
 		'Publisher':publisher,
@@ -108,6 +108,23 @@ def hold_request(isbn, future_requester):
 	cur.execute(query, values)
 	db.commit()
 	cur.close()
+
+def book_checkout(isbn, copy_number, username):
+	print "Checking out"
+	issue_date = datetime.now()
+	return_date = issue_date + timedelta(days=14)
+	query = "INSERT into issue " + \
+			"(Isbn, Copy_id, Username, Date_of_issue, Return_date, Extension_date, Count_of_extensions) " + \
+			"values(%s, %s, %s, %s, %s, %s, %s)"
+	values = (isbn, copy_number, username, issue_date, return_date, return_date, 0)
+	print query % values
+	cur = db.cursor()
+	cur.execute(query, values)
+	db.commit()
+	issue_id = cur.lastrowid
+	cur.close()
+	return issue_id
+
 
 def createBooks():
 	'''

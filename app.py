@@ -53,7 +53,7 @@ def login():
 			session['username'] = f['username']
 			user = database.get_user(f['username'])
 			if user[2]: # user is staff
-				return redirect('/book-checkout/')
+				return render_template('staff-dashboard.html')
 			else:
 				return redirect('/search-books/')
 		else:
@@ -183,9 +183,16 @@ def hold_request():
 		return 'wtf!'
 
 
-@app.route('/book-checkout/')
+@app.route('/book-checkout/', methods=['POST'])
 def book_checkout():
-	return render_template('book-checkout.html')
+	f = request.form
+	print f.items()
+	issue_id = database.book_checkout(
+		isbn=f['isbn'],
+		copy_number=f['copy-number'],
+		username=f['username'])
+	return render_template('staff-dashboard.html', checkout_message="Issue id: " + str(issue_id))
+
 
 @app.route('/return-book')
 def return_book_screen():

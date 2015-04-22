@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Staff Dashboard</h1>
+<div class="row">
+	<div class="col-sm-4">
+		<h6>Track Book and Checkout</h6>
+		<p>{{checkout_message}}</p>
+		<form class="form" role="form" method="POST" action="/book-checkout/" id="login-form">
+			<input name="isbn" type="text" class="form-control input-lg" placeholder="ISBN" required autofocus>
+			<br>
+			<input name="copy-number" type="text" class="form-control input-lg" placeholder="Copy #" required autofocus>
+			<br>
+			<input name="username" type="text" class="form-control input-lg" placeholder="Username" required autofocus>
+			<br>
+			<button type="submit" class="btn btn-success btn-block btn-lg">Confirm</button>
+		</form>
+	</div>
+	<div class="col-sm-4">
+		<h6>Return Books</h6>
+		<form class="form" role="form" method="POST" action="/return-books/" id="return-books-form">
+		</form>
+	</div>
+	<div class="col-sm-4">
+		<h6>Lost and damaged Books</h6>
+	</div>
+</div>
+
+{% endblock %}
+1

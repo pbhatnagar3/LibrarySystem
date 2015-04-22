@@ -35,6 +35,7 @@ TABLES['student_faculty'] = (
 TABLES['issue'] = (
 	"CREATE TABLE `issue` ("
     "  `Issue_id` INTEGER AUTO_INCREMENT,"
+    "  `Username` varchar(50) NOT NULL,"
     "  `Date_of_issue` DATE NOT NULL,"
     "  `Extension_date` DATE NOT NULL,"
     "  `Return_date` DATE NOT NULL,"
@@ -42,6 +43,7 @@ TABLES['issue'] = (
     "  `Copy_id` INT NOT NULL,"
     "  `Isbn` VARCHAR(50) NOT NULL,"
     "  PRIMARY KEY (`Issue_id`),"
+    "  FOREIGN KEY (`Username`) REFERENCES user (`Username`),"
     "  FOREIGN KEY (`Copy_id`) REFERENCES book_copy (`Copy_number`),"
     "  FOREIGN KEY (`Isbn`) REFERENCES book_copy (`Isbn`)"
     ") ENGINE=InnoDB")
