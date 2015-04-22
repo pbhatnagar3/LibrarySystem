@@ -17,7 +17,7 @@ def connect():
 def new_user(username, password):
 	cur = db.cursor()
 	query = "INSERT INTO user (Username,Password) VALUES(%s, %s)"
-	print username, password
+	print query % (username, password)
 	cur.execute( query, (username,password) )
 	db.commit()
 	cur.close()
@@ -28,7 +28,6 @@ def login(username, password):
 	query = "SELECT EXISTS(SELECT * FROM user WHERE Username=%s AND Password=%s)"
 	cur.execute(query, (username, password))
 	exists, = cur.fetchone() # fetchone returns a tuple
-	print exists
 	if exists:
 		return True
 		cur.close()
@@ -44,7 +43,6 @@ def get_user(username):
 
 
 def create_profile(username, name, dob, gender, email, is_faculty, address, department):
-	print name
 	cur = db.cursor()
 	query = "INSERT into student_faculty values(%s, %s, %s, %s,%s, %s,%s, %s,%s, %s)"
 	cur.execute(query, (username, name, dob, gender, 'false',email, address,  is_faculty, '100', department))
@@ -63,10 +61,8 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 		print "THIS IS THE RESULT" + result	
 		return result
 	'''	
-
-		
+	print "search_books"
 	query = "SELECT * FROM book WHERE "
-
 	params = {'Isbn':isbn, 
 			'Title':title, 
 			#'Author':author,
@@ -84,27 +80,21 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 		else: query += p + '=%s'
 
 		# print query, tuple(values)
-	print "QUERY", query
 	if author is not None:
 		query = query + " AND (Isbn IN (SELECT Isbn FROM author WHERE Name = %s))" 
 		values.append(author)
 	cur = db.cursor()
-	print "*********************"
 	print query % tuple(values)
-	print "********************"
 	cur.execute( query, tuple(values) )
 		# print "SEE THIS", cur.fetchall()
 	result = cur.fetchall()
 	to_return = []
-	print "RESULT", result
 	for r in result:
-		print r[0], "Getting Copies"
+		# print r[0], "Getting Copies"
 		cur.execute("SELECT count(Copy_number) from book_copy where Isbn = %s AND Is_checked_out = 0 AND Is_on_hold = 0" % (r[0]))
 		num_copies = cur.fetchall()
-		print "number of copies", num_copies
+		# print "number of copies", num_copies
 		to_return.append(r + num_copies[0])
-
-
 	return to_return
 
 def create_issue(isbn, hold_request_date, estimated_return_date):
@@ -117,7 +107,7 @@ def create_issue(isbn, hold_request_date, estimated_return_date):
 def hold_request(isbn, future_requester):
 	# When the submit button is clicked, select the lowest copy_number available of the selected ISBN
 	query = "SELECT MIN(Copy_number) FROM book_copy WHERE Isbn=" + isbn + " AND Is_checked_out=0 AND Is_on_hold=0"
-	print query
+	print "hold request"
 	cur = db.cursor()
 	cur.execute(query)
 	copy_number, = cur.fetchone()
