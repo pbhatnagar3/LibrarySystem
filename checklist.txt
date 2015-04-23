@@ -1,9 +1,10 @@
 Guidelines for populating the database
 
-1.There should be at least 20 users. 15 students and 5 faculty members.
-2.There should be at least 2 staff members.
+1.There should be at least 20 users. 15 students and 5 faculty members. --- OK ---
+2.There should be at least 2 staff members. -- OK
 3.At least 2 students should have been debarred for the semester (i.e. their penalty 
-amount should’ve reached $100)
+amount should’ve reached $100)  --- OK ---
+
 4.There should be at least 10 books in the library. 3 books with 3 copies, 3 with 7 copies, 
 2 books with 2 copies each, 1 book with 1 copy, and 1 book with 4 copies.
 5. At least 2 out of the 10 books above should be ‘Books on Reserve’
