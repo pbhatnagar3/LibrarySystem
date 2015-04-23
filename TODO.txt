@@ -1,1 +1,1 @@
-create profile page: department should only show up if faculty is selected
+- create profile page: department should only show up if faculty is selected

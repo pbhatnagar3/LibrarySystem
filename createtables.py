@@ -191,26 +191,52 @@ def populate_users():
             values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
             cursor.execute(query,values)
 
-    for i in range(1,3):
-        username = "DEBARRED_STUDENT"+str(i)
-        query = "INSERT INTO user VALUES(%s,%s,0)"
-        values = (username,password)
-        cursor.execute(query,values)
+        if(i < 3):
+            username = "DEBARRED_STUDENT"+str(i)
+            query = "INSERT INTO user VALUES(%s,%s,0)"
+            values = (username,password)
+            cursor.execute(query,values)
 
-        query = "INSERT INTO student_faculty VALUES(%s,%s,%s,%s,1,%s,%s,0,100,%s)"
-        values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
-        cursor.execute(query,values)
+            query = "INSERT INTO student_faculty VALUES(%s,%s,%s,%s,1,%s,%s,0,100,%s)"
+            values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
+            cursor.execute(query,values)
 
-    for i in range(1,3):
-        username = "STAFF"+str(i)
-        query = "INSERT INTO user VALUES(%s,%s,1)"
-        values = (username,password)
-        cursor.execute(query,values)
 
-        query = "INSERT INTO student_faculty VALUES(%s,%s,%s,%s,0,%s,%s,0,0,%s)"
-        values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
-        cursor.execute(query,values)
+            username = "STAFF"+str(i)
+            query = "INSERT INTO user VALUES(%s,%s,1)"
+            values = (username,password)
+            cursor.execute(query,values)
 
+            query = "INSERT INTO student_faculty VALUES(%s,%s,%s,%s,0,%s,%s,0,0,%s)"
+            values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
+            cursor.execute(query,values)
+
+    cnx.commit()
+
+    
+
+def populate_books():
+    
+    subjectDict = {'Computer Science':200,'English':3,'ECE':4,'Math':20,'Biology':1,'Physics':2}
+    for subject in subjectDict:
+        query = "INSERT INTO subject VALUES(%s,%s)"
+        values = (subject,subjectDict[subject])
+        cursor.execute(query,values)
+    
+
+    isbn_base = 1000
+    query = "INSERT INTO book VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    for i in range(1,16):
+        if i <= 3:
+            values = (isbn_base+i,"ReservedBook"+str(i),1,1,"Publisher_ReservedBook"+str(i),
+                "Place_ReservedBook"+str(i),1,"Computer Science",1000)
+            
+        if i > 3:
+            values = (isbn_base+i,"Book"+str(i),0,1,"Publisher_Book"+str(i),
+                "Place_Book"+str(i),1,"ECE",1500)
+        #print (query % values)
+        cursor.execute(query,values)
+    
     cnx.commit()
 
 
@@ -218,7 +244,9 @@ def populate_users():
 
 #drop_tables()
 #create_tables()
-populate_users()
+#populate_users()
+#populate_books()
+
 
 
 cursor.close()
