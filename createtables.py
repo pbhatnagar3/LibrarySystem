@@ -157,6 +157,11 @@ def create_tables():
             print("OK")
 
 # POPULATE TABLES ACCORDING TO REQUIREMENT
+
+def populate_tables():
+    populate_users()
+    populate_books()
+
 def populate_users():
     specialUser = ['natch','rohit','pujun']
     password = 'password'
@@ -211,9 +216,7 @@ def populate_users():
             values = (username,username,DOB,"Male",username+"@gatech.edu",username+"land","Computer Science")
             cursor.execute(query,values)
 
-    cnx.commit()
-
-    
+    cnx.commit()    
 
 def populate_books():
     
@@ -223,20 +226,67 @@ def populate_books():
         values = (subject,subjectDict[subject])
         cursor.execute(query,values)
     
-
     isbn_base = 1000
-    query = "INSERT INTO book VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     for i in range(1,16):
+
+        if i < 5: subject = "ECE"
+        elif i < 8: subject = "English"
+        elif i < 12: subject = "Biology"
+        elif i < 16: subject = "Math"
+
+        query = "INSERT INTO book VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         if i <= 3:
             values = (isbn_base+i,"ReservedBook"+str(i),1,1,"Publisher_ReservedBook"+str(i),
                 "Place_ReservedBook"+str(i),1,"Computer Science",1000)
+            cursor.execute(query,values)
+
+            query = "INSERT INTO author VALUES(%s,%s)"
+            values = ("AUTHOR_"+str(isbn_base+i)+"_1",isbn_base+i)
+            cursor.execute(query,values)
+            values=("AUTHOR_"+str(isbn_base+i)+"_2",isbn_base+i)
+            cursor.execute(query,values)
             
         if i > 3:
             values = (isbn_base+i,"Book"+str(i),0,1,"Publisher_Book"+str(i),
-                "Place_Book"+str(i),1,"ECE",1500)
-        #print (query % values)
-        cursor.execute(query,values)
-    
+                "Place_Book"+str(i),1,subject,1500)
+            cursor.execute(query,values)
+
+            query = "INSERT INTO author VALUES(%s,%s)"
+            values = ("AUTHOR_"+str(isbn_base+i)+"_1",isbn_base+i)
+            cursor.execute(query,values)
+
+        '''
+        4.There should be at least 10 books in the library. 3 books with 3 copies, 3 with 7 copies, 
+        2 books with 2 copies each, 1 book with 1 copy, and 1 book with 4 copies. 
+        '''
+        #### GENERATE BOOK COPIES ####
+        if i <= 3:
+            query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(%s,%s,%s,%s,%s)"
+            values = [(1,0,0,1,isbn_base+i),(0,0,0,2,isbn_base+i),(0,0,0,3,isbn_base+i)]
+            for value in values:
+                cursor.execute(query,value)
+        elif i <= 6:
+            query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(%s,%s,%s,%s,%s)"
+            values = [(1,0,0,1,isbn_base+i),(0,0,0,2,isbn_base+i),(0,0,0,3,isbn_base+i),(0,0,0,4,isbn_base+i),(0,0,0,5,isbn_base+i)
+            ,(0,0,0,6,isbn_base+i),(0,0,0,7,isbn_base+i)]
+            for value in values:
+                cursor.execute(query,value)
+        elif i <= 8:
+            query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(%s,%s,%s,%s,%s)"
+            values = [(1,0,0,1,isbn_base+i),(0,0,0,2,isbn_base+i)]
+            for value in values:
+                cursor.execute(query,value)
+        elif i <= 14:
+            query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(%s,%s,%s,%s,%s)"
+            value = (1,0,0,1,isbn_base+i)
+            cursor.execute(query,value)
+
+        else:
+            query = "INSERT INTO book_copy(Is_damaged,Is_checked_out,Is_on_hold,Copy_number,Isbn) VALUES(%s,%s,%s,%s,%s)"
+            values = [(1,0,0,1,isbn_base+i),(0,0,0,2,isbn_base+i),(0,0,0,3,isbn_base+i),(0,0,0,4,isbn_base+i)]
+            for value in values:
+                cursor.execute(query,value)
+ 
     cnx.commit()
 
 
