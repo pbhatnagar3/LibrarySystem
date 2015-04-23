@@ -1,0 +1,37 @@
+Guidelines for populating the database
+
+1.There should be at least 20 users. 15 students and 5 faculty members.
+2.There should be at least 2 staff members.
+3.At least 2 students should have been debarred for the semester (i.e. their penalty 
+amount should’ve reached $100)
+4.There should be at least 10 books in the library. 3 books with 3 copies, 3 with 7 copies, 
+2 books with 2 copies each, 1 book with 1 copy, and 1 book with 4 copies.
+5. At least 2 out of the 10 books above should be ‘Books on Reserve’
+6. At least 2 books out of the 10 should have multiple authors.
+7. There should be at least 30 different Issue transactions saved in Issues relation. Out of 
+which at least 5 should be depicting books on hold and yet to be checked out and 5 already 
+checked-out. 
+8.At least 5 users should’ve requested for extension. 
+9.At least 5 different future requests recorded. 2 on copies of the same book.
+10. There should be at least 8 book copies damaged in the system for three different 
+subjects.
+11. All books entered should have a location in the library.
+12. Make sure there is enough data populated in the system for you to demo the reports if 
+asked.
+
+Checklist
+1) Login
+2) New User Registration
+3) Create Profile
+4) Search Books
+5) Request Hold on a Book
+6) Request Extension on a Book
+7) Future Hold Request on a Book
+8) Track Location
+9) Checkout a Book
+10) Return a Book
+11) Penalty charges for lost/damaged book
+12) Damaged Book Report
+13) Popular Books Report
+14) Frequent User Report
+15) Popular Subject Report
