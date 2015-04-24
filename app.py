@@ -233,9 +233,11 @@ def frequent_users_report():
 	return render_template('frequent-users-report.html', frequent_users_jan = frequent_users_jan, frequent_users_feb = frequent_users_feb)
 
 @app.route('/popular-subjects-report')
-def frequent_subjects_report():
-
-	return render_template('popular-subjects-report.html')
+def popular_subjects_report():
+	popular_subjects_jan = database.popular_subjects(1)
+	popular_subjects_feb = database.popular_subjects(2)
+	
+	return render_template('popular-subjects-report.html', popular_subjects_jan = popular_subjects_jan, popular_subjects_feb = popular_subjects_feb)
 
 
 @app.route('/damaged-books-report', methods=['POST', 'GET'])
@@ -257,7 +259,7 @@ def damaged_books_report():
 		table_contents.append((f['subject_2'], database.find_num_damaged_books(f['month'], f['subject_2'])))
 		table_contents.append((f['subject_3'], database.find_num_damaged_books(f['month'], f['subject_3'])))
 		print "THINGS THAT WILL GO IN THE TABLE", table_contents
-		return render_template('damaged-books-report.html', subjects = subject_list, table_contents = table_contents, month = f['month'])
+		return render_template('damaged-books-report.html', subjects = subject_list, table_contents = table_contents, month = database.month_name_finder(f['month']))
 		
 if __name__ == '__main__':
 	app.run(debug=True)

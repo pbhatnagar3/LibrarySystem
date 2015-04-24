@@ -255,7 +255,19 @@ def createBooks():
 
 	cur.close()	
 
-def frequent_users(month):
+month_name = {
+				'1': 'Jan',
+				'2': 'Feb',
+				'3': 'March',
+				'4': 'April',
+				'5': 'May',
+				'6': 'June'
+}
+
+def month_name_finder(month):
+	return month_name[str(month)]
+
+def frequent_users(month):	
 	to_return = []
 	cur = db.cursor()
 	query = "select username from issue where EXTRACT(MONTH FROM Date_of_issue) = %s group by username limit 5"
@@ -270,10 +282,26 @@ def frequent_users(month):
 		cur.execute(query, values)
 		num_checkouts = cur.fetchall()[0][0]
 		if num_checkouts >= 10:
-			to_return.append((month,username, num_checkouts))
+			to_return.append((month_name_finder(month),username, num_checkouts))
 	
 	return to_return
 
+def popular_subjects(month):
+	to_return = []
+	cur = db.cursor()
+	query = 'select Subject_name from issue, book where issue.isbn = book.isbn and  EXTRACT(MONTH FROM Date_of_issue) = %s group by Subject_name limit 3 '
+	values = (month,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	print "POPULAR user FOR MONTH", month, " ", result
+	for r in result:
+		subject_name = r[0]
+		query = 'select count(*) from issue, book where issue.isbn = book.isbn and  EXTRACT(MONTH FROM Date_of_issue) = %s and Subject_name = %s '
+		values = (month, subject_name)
+		cur.execute(query, values)
+		num_checkouts = cur.fetchall()[0][0]
+		to_return.append((month_name_finder(month), subject_name, num_checkouts))
+	return to_return
 
 def find_popular_books(month):
 	to_return = []
@@ -290,7 +318,8 @@ def find_popular_books(month):
 		values = (month, isbn)
 		cur.execute(query, values)
 		num_checkouts = cur.fetchall()[0][0]
-		to_return.append((month,title, num_checkouts))
+		print "number of checkouts", num_checkouts
+		to_return.append((month_name_finder(month),title, num_checkouts))
 	
 	return to_return
 
