@@ -19,7 +19,17 @@
 	</div>
 	<div class="col-sm-4">
 		<h6>Return Books</h6>
-		<form class="form" role="form" method="POST" action="/return-books/" id="return-books-form">
+		<p>{{return_book_message}}</p>
+		<form class="form" role="form" method="POST" action="/return-book/" id="return-books-form">
+			<input class="form-control input-lg" name="issue-id" type="text" placeholder="Issue id">
+			<br>
+			{% for i in issue_details %}
+			<p>{{i}}</p>
+			{% endfor %}
+			<input name="is-damaged" value="yes" type="radio"> Is Damaged
+			<br>
+			<br>
+			<button class="btn btn-lg btn-block btn-success" type="submit">Return</button>
 		</form>
 	</div>
 	<div class="col-sm-4">
@@ -28,4 +38,11 @@
 </div>
 
 {% endblock %}
-1
+
+{% block extrascripts %}
+<script type="text/javascript">
+	// $.post("/issue-details/", {suggest: txt}, function(result){
+ //        $("span").html(result);
+ //    });
+</script>
+{% endblock %}

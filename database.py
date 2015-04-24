@@ -173,6 +173,33 @@ def book_checkout(isbn, copy_number, username):
 	cur.close()
 	return issue_id
 
+def return_book(issue_id, is_damaged):
+	# get issue details
+	query = "SELECT Username, Return_date, Isbn, Copy_id FROM issue WHERE Issue_id=%s"
+	cur = db.cursor()
+	cur.execute( query, (issue_id,) )
+	username, return_date, isbn, copy_number = cur.fetchone()
+	cur.close()
+
+	# update book_copy
+	query = "UPDATE book_copy SET Is_checked_out=0, Is_damaged=%s WHERE Isbn=%s AND Copy_number=%s"
+	cur = db.cursor()
+	cur.execute(query, (is_damaged, isbn, copy_number))
+	db.commit()
+	cur.close()
+	penalty = 0.5 * float((datetime.now().date() - return_date).days)
+	if penalty > 0:
+		query = "UPDATE student_faculty SET Penalty=Penalty+%s WHERE Username=%s"
+		cur = db.cursor()
+		cur.execute(query, (penalty, username))
+		db.commit()
+		cur.close()
+	else:
+		penalty = 0
+		
+	return (username, isbn, copy_number, return_date, penalty)
+
+
 
 def createBooks():
 	'''
