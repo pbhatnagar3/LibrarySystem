@@ -93,8 +93,10 @@ def search_books(isbn, title, author, publisher, edition, reserved):
 		# print r[0], "Getting Copies"
 		cur.execute("SELECT count(Copy_number) from book_copy where Isbn = %s AND Is_checked_out = 0 AND Is_on_hold = 0" % (r[0]))
 		num_copies = cur.fetchall()
-		# print "number of copies", num_copies
-		to_return.append(r + num_copies[0])
+		print "number of copies", num_copies
+		if num_copies[0][0] > 0:
+			to_return.append(r + num_copies[0])
+		print "THIS IS BEING RETURNED", to_return
 	return to_return
 
 def create_issue(isbn, hold_request_date, estimated_return_date):

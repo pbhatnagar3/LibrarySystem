@@ -178,7 +178,8 @@ def hold_request():
 		print 'posting'
 		f = request.form
 		database.hold_request(f['selected-book-isbn'], session['username'])
-		return render_template('book-confirmation.html')
+		message = "You have successfully requested a hold on the selected book"
+		return render_template('search-books.html', message = message)
 	else:
 		return 'wtf!'
 
