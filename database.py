@@ -191,6 +191,23 @@ def createBooks():
 
 
 
+def get_subjects():
+	cur = db.cursor()
+	query = "SELECT Name FROM subject"
+	cur.execute( query )
+	return cur.fetchall()
+
+def find_num_damaged_books(month, subject):
+	print "MONTH ", month
+	print "SUBJECT ", subject
+	cur = db.cursor()
+	query = "select Count(*) from book_copy where Is_damaged = 1 and copy_number in (SELECT Copy_id FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = %s AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = %s)) and isbn in (SELECT Copy_id FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = %s AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = %s))"
+	values = (month, subject, month, subject)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	print "HERE IS THE RESULT", result
+	return result
+
 if __name__ == '__main__':
 	createBooks()
 

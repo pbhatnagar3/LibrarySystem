@@ -4,24 +4,24 @@
 <h3>Damaged Books Report</h3>	
 <div class="row">
 	<div class="col-sm-6">
-		<input list="MonthList" name="Month" class="form-control input-lg" placeholder="Month" required>
+		<form class="form" role="form" method="POST" action="/damaged-books-report" id="damagedbook-form">
+		<input list="MonthList" name="month" class="form-control input-lg" placeholder="Natch" required>
 			<datalist id="MonthList">
-    			<option value="Jan">
-    			<option value="Feb">
+    			<option value='1'>Jan</option>
+    			<option value="2">
+    			<option value="3">
+    			
 	  		</datalist>
 		<br>
 	</div>
 	<div class="col-sm-6">
-		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required><br>
-		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required><br>
-		<input list="SubjectList" name="Month" class="form-control input-lg" placeholder="Subject" required>
+		<input list="SubjectList" name="subject_1" class="form-control input-lg" placeholder="Subject" required><br>
+		<input list="SubjectList" name="subject_2" class="form-control input-lg" placeholder="Subject" required><br>
+		<input list="SubjectList" name="subject_3" class="form-control input-lg" placeholder="Subject" required>
 			<datalist id="SubjectList">
-    			<option value="Mathematics">
-    			<option value="Computer Science">		
-    			<option value="Chemistry">
-    			<option value="Physics">
-    			<option value="Mechanical Engineering">
-    			<option value="Electrical Engineering">
+    		{% for s in subjects %}
+    			<option value={{s}}>	  		
+			{% endfor %}
 	  		</datalist>
 		<br>
 	</div>
@@ -31,6 +31,7 @@
 	<div class="col-sm-4 col-sm-offset-4">
 		<button type="submit" class="btn btn-success btn-block btn-lg">Show Report</button>
 	</div>
+</form>
 </div>
 <div class="row">
 	<hr>
@@ -40,29 +41,17 @@
  		<table class="table">
  		<tr>
 		    <th>Month</th>
-		    <th>Title of the Book</th>		
-		    <th>#checkouts</th>
+		    <th>Subject</th>		
+		    <th># Damaged Book</th>
 		</tr>
-		
+		{% for t in table_contents  %}
   		<tr>
-		    <td>Jill</td>
-		    <td>Smith</td>		
-		    <td>50</td>
-		    
+		    <td>{{month}}</td>
+		    <td>{{t.0}}</td>		
+		    <td>{{t.1.0.0}}</td>
 		  </tr>
-		  <tr>
-		    <td>Eve</td>
-		    <td>Jackson</td>		
-		    <td>94</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>John</td>
-		    <td>Doe</td>		
-		    <td>80</td>
-		    
-		  </tr>
-
+		{% endfor %}   
+		 
 	</table>
  	</div>
 </div>

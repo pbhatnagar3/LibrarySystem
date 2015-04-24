@@ -216,9 +216,26 @@ def frequent_subjects_report():
 	return render_template('popular-subjects-report.html')
 
 
-@app.route('/damaged-books-report')
+@app.route('/damaged-books-report', methods=['POST', 'GET'])
 def damaged_books_report():
-	return render_template('damaged-books-report.html')
-	
+	#find all the subjects
+	subjects = database.get_subjects();
+	subject_list = [s[0] for s in subjects]
+	print subject_list
+	if request.method == 'GET':	
+		return render_template('damaged-books-report.html', subjects = subject_list)
+	elif request.method == 'POST':
+		table_contents = [];
+		f = request.form
+		print "this is sparta"
+		print f['subject_1']
+		# print f['month']
+		print f.items()
+		table_contents.append((f['subject_1'], database.find_num_damaged_books(f['month'], f['subject_1'])))
+		table_contents.append((f['subject_2'], database.find_num_damaged_books(f['month'], f['subject_2'])))
+		table_contents.append((f['subject_3'], database.find_num_damaged_books(f['month'], f['subject_3'])))
+		print "THINGS THAT WILL GO IN THE TABLE", table_contents
+		return render_template('damaged-books-report.html', subjects = subject_list, table_contents = table_contents, month = f['month'])
+		
 if __name__ == '__main__':
 	app.run(debug=True)
