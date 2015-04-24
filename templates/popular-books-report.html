@@ -11,26 +11,25 @@
 		    <th>Title of the Book</th>		
 		    <th>#checkouts</th>
 		</tr>
-		
-  		<tr>
-		    <td>Jill</td>
-		    <td>Smith</td>		
-		    <td>50</td>
+		{% for j in popular_book_jan %}
+    	<tr>
+		    <td>{{j.0}}</td>
+		    <td>{{j.1}}</td>		
+		    <td>{{j.2}}</td>
 		    
 		  </tr>
-		  <tr>
-		    <td>Eve</td>
-		    <td>Jackson</td>		
-		    <td>94</td>
-		    
-		  </tr>
-		  <tr>
-		    <td>John</td>
-		    <td>Doe</td>		
-		    <td>80</td>
-		    
-		  </tr>
+    		{% endfor %}
+  		
 
+		{% for f in popular_book_feb %}
+    	<tr>
+		    <td>{{f.0}}</td>
+		    <td>{{f.1}}</td>		
+		    <td>{{f.2}}</td>
+		    
+		  </tr>
+    		{% endfor %}
+    		
 	</table>
  	</div>
 </div>

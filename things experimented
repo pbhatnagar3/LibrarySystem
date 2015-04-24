@@ -1,0 +1,13 @@
+Select copy_number, isbn from book_copy as T Natural Join SELECT Copy_id, isbn FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = '1' AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = "Computer Science") as R;
+
+
+SELECT Copy_id, isbn FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = '1' AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = "Computer Science");
+
+
+select * from (Select copy_number, isbn from book_copy) as T Natural Join (SELECT Copy_id, isbn FROM issue as R WHERE EXTRACT(MONTH FROM Return_date)  = '1' AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = "Computer Science"));
+
+
+select COUNT(*) from (Select copy_number, isbn from book_copy) as T Natural Join (SELECT Copy_id, isbn FROM issue as R WHERE EXTRACT(MONTH FROM Return_date)  = '1' AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = "Computer Science")) as M
+
+CORRECT: SELECT Copy_id, isbn FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = '1' AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = "Computer Science")
+

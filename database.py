@@ -255,20 +255,47 @@ def createBooks():
 
 	cur.close()	
 
+def find_popular_books(month):
+	to_return = []
+	cur = db.cursor()
+	query = "select isbn from issue where EXTRACT(MONTH FROM Date_of_issue) = %s group by isbn limit 3"
+	values = (month,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	print "POPULAR BOOK FOR MONTH", month, " ", result
+	for r in result:
+		isbn = r[0]
+		title =  find_book_from_isbn(isbn)
+		query = "select count(*) from issue where EXTRACT(MONTH FROM Date_of_issue) = %s and isbn = %s"
+		values = (month, isbn)
+		cur.execute(query, values)
+		num_checkouts = cur.fetchall()[0][0]
+		to_return.append((month,title, num_checkouts))
+	
+	return to_return
 
+def find_book_from_isbn(isbn):
+	# print "ISBN is ", isbn
+	cur = db.cursor()
+	query = "select title from book where isbn = %s"
+	values = (isbn,)
+	cur.execute(query, values)
+	return cur.fetchall()[0][0]
 
 def get_subjects():
 	cur = db.cursor()
 	query = "SELECT Name FROM subject"
 	cur.execute( query )
-	return cur.fetchall()
+	result = cur.fetchall()
+	print "AVAILABLE SUBJECTS ", result
+	return result
 
 def find_num_damaged_books(month, subject):
 	print "MONTH ", month
 	print "SUBJECT ", subject
 	cur = db.cursor()
-	query = "select Count(*) from book_copy where Is_damaged = 1 and copy_number in (SELECT Copy_id FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = %s AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = %s)) and isbn in (SELECT Copy_id FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = %s AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = %s))"
-	values = (month, subject, month, subject)
+	query = "select COUNT(*) from (Select copy_number, isbn from book_copy) as T,  (SELECT Copy_id, isbn FROM issue WHERE EXTRACT(MONTH FROM Return_date)  = %s AND Isbn IN (SELECT Isbn FROM book WHERE Subject_name = %s)) as M where M.copy_id = T.copy_number and M.isbn = T.isbn";
+	values = (month, subject)
 	cur.execute(query, values)
 	result = cur.fetchall()
 	print "HERE IS THE RESULT", result

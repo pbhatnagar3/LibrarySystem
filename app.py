@@ -218,7 +218,12 @@ def lost_damaged_book():
 
 @app.route('/popular-books-report')
 def popular_books_report():
-	return render_template('popular-books-report.html')
+	#find the most popular books for Jan
+	popular_book_jan = database.find_popular_books(1)
+	print "HAHAHAHA", popular_book_jan
+	popular_book_feb = database.find_popular_books(2)
+	
+	return render_template('popular-books-report.html', popular_book_jan = popular_book_jan, popular_book_feb = popular_book_feb)
 
 @app.route('/frequent-users-report')
 def frequent_users_report():
@@ -226,6 +231,7 @@ def frequent_users_report():
 
 @app.route('/popular-subjects-report')
 def frequent_subjects_report():
+
 	return render_template('popular-subjects-report.html')
 
 
@@ -234,7 +240,7 @@ def damaged_books_report():
 	#find all the subjects
 	subjects = database.get_subjects();
 	subject_list = [s[0] for s in subjects]
-	print subject_list
+	print "LIST OF RETURNED SUBJECTS", subject_list
 	if request.method == 'GET':	
 		return render_template('damaged-books-report.html', subjects = subject_list)
 	elif request.method == 'POST':
