@@ -162,6 +162,34 @@ def populate_tables():
     populate_users()
     populate_books()
 
+def populate_floors():
+    for i in range(1,4):
+        query = "INSERT INTO floor VALUES(%s,5,5)"
+        values = (i,)
+        cursor.execute(query,values)
+
+    for j in range(1,21):
+
+        if j <= 10:
+            k = 1
+        elif j <= 15:
+            k = 2
+        elif j <= 20:
+            k = 3
+
+        query = "INSERT INTO shelf VALUES(%s,%s,%s)"
+        values = (j,j,k)
+        cursor.execute(query,values)
+
+    query = "INSERT INTO located_on VALUES(%s,%s)"
+    values = [(1001, 1), (1002,1), (1003, 1), (1004, 1), (1005, 11), (1006, 11), (1007, 11), (1008, 16), 
+    (1009, 16), (1010, 16), (1011, 16), (1012, 2), (1013, 2), (1014, 2), (1015, 2)]
+    for value in values:
+        cursor.execute(query,value)
+    cnx.commit() 
+
+
+
 def populate_users():
     specialUser = ['natch','rohit','pujun']
     password = 'password'
@@ -245,6 +273,8 @@ def populate_books():
             cursor.execute(query,values)
             values=("AUTHOR_"+str(isbn_base+i)+"_2",isbn_base+i)
             cursor.execute(query,values)
+
+
             
         if i > 3:
             values = (isbn_base+i,"Book"+str(i),0,1,"Publisher_Book"+str(i),
@@ -296,8 +326,7 @@ def populate_books():
 #create_tables()
 #populate_users()
 #populate_books()
-
-
+populate_floors()
 
 cursor.close()
 cnx.close()
