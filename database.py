@@ -286,6 +286,30 @@ def frequent_users(month):
 	
 	return to_return
 
+def track_book(isbn):
+	to_return = []
+	cur = db.cursor()
+	query = 'select Shelf_number from located_on where Isbn = %s'
+	values = (isbn,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	shelf_number = result[0][0]
+	query = 'select Aisle_number, Floor_number from shelf where Shelf_number = %s'
+	values = (shelf_number,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	aisle_number = result[0][0]
+	floor_number = result[0][1]
+	query = 'select Subject_name from book where Isbn = %s'
+	values = (isbn,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	subject_name = result[0][0]
+	to_return.append((floor_number, shelf_number, aisle_number, subject_name))
+	print "THIS IS WHAT IS BEING RETURNED", to_return
+	return to_return
+	
+
 
 def last_user(isbn, book_copy):
 	cur = db.cursor()

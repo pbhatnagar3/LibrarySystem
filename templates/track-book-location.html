@@ -2,14 +2,14 @@
 
 {% block content %}
 <h3>Track Book Location</h3>
-<form class="form" role="form" method="POST" action="/login/" id="login-form">
+<form class="form" role="form" method="POST" action="/track-book-location" id="track-book-location-form">
 		
 <div class="row">
 <hr>
 
 	<div class="col-sm-4 col-sm-offset-4">
 	
-		<input name="ISBN" type="text" class="form-control input-lg" placeholder="Enter ISBN" required autofocus>
+		<input name="isbn" type="text" class="form-control input-lg" placeholder="Enter ISBN" required autofocus>
 		<br>
 		<button type="submit" class="btn btn-success btn-block btn-lg">Locate</button>
 		
@@ -20,12 +20,12 @@
 <div class="row">
 <hr>
 	<div class="col-sm-4 col-sm-offset-4">
-	<div class="well">FloorNumber</div>
-	<div class="well">ShelfNumber</div>
-	<div class="well">AisleNumber</div>
-	<div class="well">Subject</div>
-	
-				
+	{% for l in location_info %}
+		Floor Number<div class="well">{{l.0}}</div>
+		Shelf Number<div class="well">{{l.1}}</div>
+		Aisle Number<div class="well">{{l.2}}</div>
+		Subject<div class="well">{{l.3}}</div>
+	{% endfor %}			
 	</div>
 </div>
 

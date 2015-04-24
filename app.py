@@ -163,9 +163,15 @@ def request_extension():
 def future_hold_request():
 	return render_template('future-hold-request.html')
 
-@app.route('/track-book-location')
+@app.route('/track-book-location', methods=['GET', 'POST'])
 def track_book_location():
-	return render_template('track-book-location.html')
+	if request.method == 'GET':
+		return render_template('track-book-location.html')
+	elif request.method == 'POST':
+		f = request.form
+		location_info = database.track_book(f['isbn'])
+		return render_template('track-book-location.html', location_info = location_info)
+		
 
 
 @app.route('/request-hold/', methods=['GET', 'POST'])
