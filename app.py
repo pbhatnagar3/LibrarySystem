@@ -210,10 +210,36 @@ def return_book_screen():
 	else:
 		return "wtf"
 
-
-@app.route('/lost-damaged-book')
+@app.route('/lost-damaged-book/', methods=['GET', 'POST'])
 def lost_damaged_book():
-	return render_template('lost-damaged-book.html')
+	if request.method == 'GET':
+		return "return-book-screen.html"
+	elif request.method == "POST":
+		f = request.form
+		isbn = f['isbn']
+		book_copy = f['book-copy']
+		last_user = database.last_user(isbn, book_copy)
+		print "here is the culprit", last_user
+		return render_template('staff-dashboard.html', last_user = last_user)
+	else:
+		return "wtf"
+
+
+# @app.route('/lost-damaged-book')
+# def lost_damaged_book():
+# 	return render_template('lost-damaged-book.html')
+
+@app.route('/update-penalty/', methods=['GET', 'POST'])
+def update_penalty():
+	if request.method == 'GET':
+		return "return-book-screen.html"
+	elif request.method == "POST":
+		f = request.form
+		last_user = f['last-user']
+		amount_to_be_charged = f['amount-to-be-charged']
+		database.update_penalty(last_user, amount_to_be_charged)
+		update_penalty_message = last_user + " has been charged"
+		return render_template('staff-dashboard.html', update_penalty_message = update_penalty_message)
 
 
 @app.route('/popular-books-report')

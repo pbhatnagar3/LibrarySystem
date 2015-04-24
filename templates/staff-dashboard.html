@@ -34,6 +34,24 @@
 	</div>
 	<div class="col-sm-4">
 		<h6>Lost and damaged Books</h6>
+		{{update_penalty_message}}
+		<form class="form" role="form" method="POST" action="/lost-damaged-book/" id="damaged-books-form">
+			<input class="form-control input-lg" name="isbn" type="text" placeholder="ISBN">
+			<br>
+			<input class="form-control input-lg" name="book-copy" type="text" placeholder="Book Copy#">
+			<br>
+			<button class="btn btn-lg btn-block btn-success" type="submit">Look for last user</button>
+		</form>
+		{% for u in last_user %}
+			<form class="form" role="form" method="POST" action="/update-penalty/" id="damaged-books-form">
+			<br>
+			<input class="form-control input-lg" name="last-user" type="text" placeholder={{u.0}} value={{u.0}} readonly>
+			<br>
+			<input class="form-control input-lg" name="amount-to-be-charged" type="text" placeholder="Amount to be Charged">
+			<br>
+			<button class="btn btn-lg btn-block btn-success" type="submit">Submit</button>
+		</form>
+			{% endfor %}
 	</div>
 </div>
 

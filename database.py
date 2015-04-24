@@ -286,6 +286,36 @@ def frequent_users(month):
 	
 	return to_return
 
+
+def last_user(isbn, book_copy):
+	cur = db.cursor()
+	query = 'select Username from issue where isbn = %s and Copy_id = %s order by return_date DESC LIMIT 1'
+	values = (isbn, book_copy)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	return result
+	
+
+def update_penalty(last_user, amount_to_be_charged):
+	cur = db.cursor()
+	query = "select penalty from student_faculty where name = %s"
+	values = (last_user,)
+	cur.execute(query, values)
+	result = cur.fetchall()
+	print "here is the result motherfucka ", result
+	penalty = result[0][0]
+	total_amount = int(amount_to_be_charged) + int(penalty)
+	if amount_to_be_charged > 100:
+		query = "UPDATE student_faculty SET Penalty=%s, Is_debarred = '1' WHERE Username = %s"
+	else:
+		query = "UPDATE student_faculty SET Penalty=%s WHERE Username = %s"
+	values = (str(total_amount), last_user)
+	print query % values
+	cur.execute(query, values)
+	db.commit()
+	cur.close()
+
+
 def popular_subjects(month):
 	to_return = []
 	cur = db.cursor()
