@@ -227,7 +227,10 @@ def popular_books_report():
 
 @app.route('/frequent-users-report')
 def frequent_users_report():
-	return render_template('frequent-users-report.html')
+	frequent_users_jan = database.frequent_users(1)
+	frequent_users_feb = database.frequent_users(2)
+
+	return render_template('frequent-users-report.html', frequent_users_jan = frequent_users_jan, frequent_users_feb = frequent_users_feb)
 
 @app.route('/popular-subjects-report')
 def frequent_subjects_report():
