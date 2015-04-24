@@ -121,7 +121,35 @@ def hold_request(isbn, future_requester):
 	cur.close()
 
 def book_checkout(isbn, copy_number, username):
+	"""
+	Returns -1 if checkout fails, or issue id if it succeeds
+	"""
 	print "Checking out"
+	# check if student is debarred
+	query = "SELECT Is_debarred from student_faculty WHERE Username=%s"
+	cur = db.cursor()
+	cur.execute(query, (username,))
+	is_debarred, = cur.fetchone()
+	cur.close()
+	if is_debarred:
+		print "is debarred"
+		return -1
+
+	# check if book is on hold or is damaged
+	query = "SELECT Future_requester, Is_damaged, Hold_expiry, Is_on_hold FROM book_copy WHERE Isbn=%s AND Copy_number=%s"
+	values = (isbn, copy_number)
+	print query % values
+	cur = db.cursor()
+	cur.execute(query, values)
+	future_requester, is_damaged, hold_expiry, is_on_hold = cur.fetchone()
+	# print hold_expiry > datetime.now().date()
+	cur.close()
+	if is_on_hold:
+		if (hold_expiry > datetime.now().date() and future_requester != username) or is_damaged:
+			print "is on hold or is damaged"
+			return -1
+
+	# create new issue 
 	issue_date = datetime.now()
 	return_date = issue_date + timedelta(days=14)
 	query = "INSERT into issue " + \
@@ -134,7 +162,43 @@ def book_checkout(isbn, copy_number, username):
 	db.commit()
 	issue_id = cur.lastrowid
 	cur.close()
+
+	# update book_copy - reset hold columns
+	query = "UPDATE book_copy SET Is_on_hold=0, Is_checked_out=1 WHERE Isbn=%s AND Copy_number=%s"
+	values = (isbn, copy_number)
+	print query % values
+	cur = db.cursor()
+	cur.execute(query, values)
+	db.commit()
+	cur.close()
 	return issue_id
+
+def return_book(issue_id, is_damaged):
+	# get issue details
+	query = "SELECT Username, Return_date, Isbn, Copy_id FROM issue WHERE Issue_id=%s"
+	cur = db.cursor()
+	cur.execute( query, (issue_id,) )
+	username, return_date, isbn, copy_number = cur.fetchone()
+	cur.close()
+
+	# update book_copy
+	query = "UPDATE book_copy SET Is_checked_out=0, Is_damaged=%s WHERE Isbn=%s AND Copy_number=%s"
+	cur = db.cursor()
+	cur.execute(query, (is_damaged, isbn, copy_number))
+	db.commit()
+	cur.close()
+	penalty = 0.5 * float((datetime.now().date() - return_date).days)
+	if penalty > 0:
+		query = "UPDATE student_faculty SET Penalty=Penalty+%s WHERE Username=%s"
+		cur = db.cursor()
+		cur.execute(query, (penalty, username))
+		db.commit()
+		cur.close()
+	else:
+		penalty = 0
+		
+	return (username, isbn, copy_number, return_date, penalty)
+
 
 
 def createBooks():

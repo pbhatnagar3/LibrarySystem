@@ -194,9 +194,21 @@ def book_checkout():
 	return render_template('staff-dashboard.html', checkout_message="Issue id: " + str(issue_id))
 
 
-@app.route('/return-book')
+@app.route('/return-book/', methods=['GET', 'POST'])
 def return_book_screen():
-	return render_template('return-book-screen.html')
+	if request.method == 'GET':
+		return "return-book-screen.html"
+	elif request.method == "POST":
+		f = request.form
+		issue_id = f['issue-id']
+		is_damaged = False
+		if 'is-damaged' in f: is_damaged = True
+		issue_details = []
+		issue_details = database.return_book(issue_id, is_damaged)
+		return render_template('staff-dashboard.html', return_book_message="Returned!", issue_details=issue_details)
+	else:
+		return "wtf"
+
 
 @app.route('/lost-damaged-book')
 def lost_damaged_book():
